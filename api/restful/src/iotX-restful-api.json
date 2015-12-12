@@ -1,0 +1,47 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "version": "0.0.1",
+        "title": "iot-X API",
+        "description": "This project makes the deployment of IOT become more simple, more flexible, more powerful.It provides a full set of solutions from sensor to cloud server."
+    },
+    "host": "localhost",
+    "paths": {
+        "/device": {
+            "get": {
+                "description": "设备对象资源\n",
+                "parameters": [
+                    {
+                        "name": "size",
+                        "in": "query",
+                        "description": "Size of array",
+                        "required": true,
+                        "type": "number",
+                        "format": "double"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "schema": {
+                            "title": "ArrayOfPersons",
+                            "type": "array",
+                            "items": {
+                                "title": "Person",
+                                "type": "object",
+                                "properties": {
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "single": {
+                                        "type": "boolean"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

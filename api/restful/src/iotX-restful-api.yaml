@@ -2,7 +2,9 @@ swagger: '2.0'
 info:
   version: 1.0.0
   title: iot-X RESFful API
-  description: 'This project makes the deployment of IOT become more simple, more flexible, more powerful.It provides a full set of solutions from sensor to cloud server.'
+  description: >
+  
+       'This project makes the deployment of IOT become more simple, more flexible, more powerful.It provides a full set of solutions from sensor to cloud server.  设备的层次定义：device（树莓派）>deviceclass(温度传感器)>equipment(温度传感器1)'
 host: localhost
 paths:
   /device:
@@ -51,17 +53,134 @@ paths:
             title: respDevicelist
             type: array
             items:
-              $ref: '#/definitions/respDeviceInfo'
+              $ref: '#/definitions/resDevice'
         '400':
           description: parameter is not invalid
         '401':
           description: unauthorized
         '403':
-          description: principal doesn't have permissions
-        
+          description: "principal doesn't have permissions"
+    post:
+      description: 创建一个设备对象
+      parameters:
+        - name: name
+          in: query
+          description: 设备的名称
+          required: true
+          type: string
+        - name: data
+          in: query
+          description: 设备数据，满足jason格式，由用户自己定义和解析，系统不感知
+          required: true
+          type: string
+      responses:
+        '200':
+          description: sucessful
+          schema:
+            $ref: '#/definitions/resDevice'
+        '400':
+          description: parameter is not invalid
+        '401':
+          description: unauthorized
+        '403':
+          description: "principal doesn't have permissions"
+  '/device/{id}':
+    get:
+      description: 获取一个指定ID的设备对象信息
+      parameters:
+        - name: id
+          in: path
+          description: 设备的ID
+          required: true
+          type: string
+      responses:
+        '200':
+          description: sucessful
+          schema:
+            $ref: '#/definitions/resDevice'
+        '400':
+          description: parameter is not invalid
+        '401':
+          description: unauthorized
+        '403':
+          description: "principal doesn't have permissions"
+        '404':
+          description: device is not found for this id
+    delete:
+      description: 删除一个指定ID的设备对象
+      parameters:
+        - name: id
+          in: path
+          description: 设备的ID
+          required: true
+          type: string
+      responses:
+        '200':
+          description: sucessful
+        '400':
+          description: parameter is not invalid
+        '401':
+          description: unauthorized
+        '403':
+          description: "principal doesn't have permissions"
+        '404':
+          description: device is not found for this id
+    put:
+      description: 更新一个指定ID的设备对象
+      parameters:
+        - name: id
+          in: path
+          description: 设备的ID
+          required: true
+          type: string
+        - name: data
+          in: query
+          description: 设备数据，满足jason格式，由用户自己定义和解析，系统不感知
+          required: true
+          type: string
+      responses:
+        '200':
+          description: sucessful
+        '400':
+          description: parameter is not invalid
+        '401':
+          description: unauthorized
+        '403':
+          description: "principal doesn't have permissions"
+        '404':
+          description: device is not found for this id
 definitions:
-  respDeviceInfo:
+  resUser:
     type: object
+    description: 用户对象的结构定义
+    properties:
+      id:
+        type: string
+        description: 用户ID
+      name:
+        type: string
+        description: 用户名称
+      pwd:
+        type: string
+        description: 用户密码
+      level:
+        type: integer
+        description: 用户权限级别
+      status:
+        type: integer
+        description: 用户状态(login)(logout)
+      lastLoginTime:
+        type: string
+        description: 用户最后一次登录时间
+      AuthenticationAreaid:
+        type: array
+        description: 用户属于的认证域ID，一个用户可以添加到多个认证域
+        items:
+          type: string
+          description: 用户属于的认证域ID
+  resDevice:
+    type: object
+    description: 设备对象的结构定义
     properties:
       id:
         type: string
@@ -69,14 +188,73 @@ definitions:
       name:
         type: string
         description: 设备名称
+      AuthenticationAreaid:
+        type: string
+        description: 设备属于的认证域ID，一个设备对象只能添加到一个认证域
       state:
         type: string
         description: 设备状态
       dataJason:
         type: string
         description: 设备数据，满足jason格式，由用户自己定义和解析，系统不感知
-        
-      
-          
-        
+      equipmentClass:
+        $ref: '#/definitions/resEquipmentClass'
+  resEquipmentClass:
+    type: object
+    description: 器件类的结构定义
+    properties:
+      id:
+        type: string
+        description: 器件类ID
+      name:
+        type: string
+        description: 器件名称
+      dataJason:
+        type: string
+        description: 器件类数据，满足jason格式，由用户自己定义和解析，系统不感知
+      equipment:
+        type: array
+        items:
+          $ref: '#/definitions/resEquipment'
+  resEquipment:
+    type: object
+    description: 器件对象的结构定义
+    properties:
+      id:
+        type: string
+        description: 器件ID
+      name:
+        type: string
+        description: 器件名称
+      dataJason:
+        type: string
+        description: 器件数据，满足jason格式，由用户自己定义和解析，系统不感知
+  resAuthenticationArea :
+    type: object
+    description: 认证域的结构定义
+    properties:
+      id:
+        type: string
+        description: 认证域ID
+      name:
+        type: string
+        description: 认证域名称
+      description:
+        type: string
+        description: 认证域描述
+      key:
+        type: string
+        description: 认证域的key，一个device如果要注册在该认证域，则需要携带相同的key值。同样，一个用户要添加到认证域，也需要携带key。
+      deviceslist:
+        type: array
+        description: 该认证域中的所有设备对象
+        items:
+          type: string
+          description: 设备对象ID
+      userslist:
+        type: array
+        description: 该认证域中的所有用户
+        items:
+          type: string
+          description: 用户ID
     

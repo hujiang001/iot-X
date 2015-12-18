@@ -1,0 +1,6 @@
+this module is designed to be the iot server, currently it's main responsibility is to handle the resful messages
+
+following steps described how to compile and run the server.
+1. configure maven
+2. run command: mvn exec:java
+3. visit the server by uri: http://localhost:8080/iotx/iotxresource if you are test in your local host

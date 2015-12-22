@@ -3,10 +3,189 @@
     "info": {
         "version": "1.0.0",
         "title": "iot-X RESFful API",
-        "description": "\n'This project makes the deployment of IOT become more simple, more flexible, more powerful.It provides a full set of solutions from sensor to cloud server.  设备的层次定义：device（树莓派）>deviceclass(温度传感器)>equipment(温度传感器1)'\n"
+        "description": "'This project makes the deployment of IOT become more simple, more flexible, more powerful.It provides a full set of solutions from sensor to cloud server.  设备的层次定义：device（树莓派）>deviceclass(温度传感器)>equipment(温度传感器1)'\n"
     },
     "host": "localhost",
     "paths": {
+        "/authenticationArea": {
+            "post": {
+                "description": "创建一个认证域",
+                "parameters": [
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "description": "认证域的名称",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "description",
+                        "in": "query",
+                        "description": "认证域的描述",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "key",
+                        "in": "query",
+                        "description": "认证域的key值，user和device通过该key值加入到认证域。",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "sucessful",
+                        "schema": {
+                            "$ref": "#/definitions/resAuthenticationArea"
+                        }
+                    },
+                    "400": {
+                        "description": "parameter is not invalid"
+                    },
+                    "401": {
+                        "description": "unauthorized"
+                    },
+                    "403": {
+                        "description": "principal doesn't have permissions"
+                    }
+                }
+            }
+        },
+        "/authenticationArea/{id}": {
+            "get": {
+                "description": "获取一个指定ID的认证域信息",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "认证域的ID",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "key",
+                        "in": "query",
+                        "description": "认证域的key值",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "sucessful",
+                        "schema": {
+                            "$ref": "#/definitions/resAuthenticationArea"
+                        }
+                    },
+                    "400": {
+                        "description": "parameter is not invalid"
+                    },
+                    "401": {
+                        "description": "unauthorized"
+                    },
+                    "403": {
+                        "description": "principal doesn't have permissions"
+                    },
+                    "404": {
+                        "description": "device is not found for this id"
+                    }
+                }
+            },
+            "delete": {
+                "description": "删除一个指定ID的认证域",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "认证域的ID",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "key",
+                        "in": "query",
+                        "description": "认证域的key值",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "sucessful"
+                    },
+                    "400": {
+                        "description": "parameter is not invalid"
+                    },
+                    "401": {
+                        "description": "unauthorized"
+                    },
+                    "403": {
+                        "description": "principal doesn't have permissions"
+                    },
+                    "404": {
+                        "description": "device is not found for this id"
+                    }
+                }
+            },
+            "put": {
+                "description": "更新一个指定ID的认证域",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "认证域的ID",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "key",
+                        "in": "query",
+                        "description": "认证域的key值",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "description",
+                        "in": "query",
+                        "description": "认证域的描述",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "userId",
+                        "in": "query",
+                        "description": "需要添加的用户id",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "udeviceId",
+                        "in": "query",
+                        "description": "需要添加的设备id",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "sucessful"
+                    },
+                    "400": {
+                        "description": "parameter is not invalid"
+                    },
+                    "401": {
+                        "description": "unauthorized"
+                    },
+                    "403": {
+                        "description": "principal doesn't have permissions"
+                    },
+                    "404": {
+                        "description": "device is not found for this id"
+                    }
+                }
+            }
+        },
         "/device": {
             "get": {
                 "description": "获取device对象列表",
@@ -215,6 +394,253 @@
                     },
                     "404": {
                         "description": "device is not found for this id"
+                    }
+                }
+            }
+        },
+        "/user": {
+            "get": {
+                "description": "获取用户对象列表",
+                "parameters": [
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "description": "通过用户名称过滤",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "namePartten",
+                        "in": "query",
+                        "description": "通过用户名称的正则表达式过滤",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "state",
+                        "in": "query",
+                        "description": "通过用户状态过滤",
+                        "required": false,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "sortField",
+                        "in": "query",
+                        "description": "指定返回列表排序的域，取值只能是\"name\"\\\"namePartten\"\\\"state\"",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "sortOrder",
+                        "in": "query",
+                        "description": "指定返回列表是升序还是降序，取值只能是\"ASC\"\\\"DESC\"",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "numGet",
+                        "in": "query",
+                        "description": "指定需要获取的用户个数",
+                        "required": false,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "numSkip",
+                        "in": "query",
+                        "description": "指定需要跳过的用户个数",
+                        "required": false,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "sucessful",
+                        "schema": {
+                            "title": "respDevicelist",
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/resUser"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "parameter is not invalid"
+                    },
+                    "401": {
+                        "description": "unauthorized"
+                    },
+                    "403": {
+                        "description": "principal doesn't have permissions"
+                    }
+                }
+            },
+            "post": {
+                "description": "创建一个用户对象",
+                "parameters": [
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "description": "用户的名称",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "pwd",
+                        "in": "query",
+                        "description": "用户密码",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "level",
+                        "in": "query",
+                        "description": "用户权限级别",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "sucessful",
+                        "schema": {
+                            "$ref": "#/definitions/resUser"
+                        }
+                    },
+                    "400": {
+                        "description": "parameter is not invalid"
+                    },
+                    "401": {
+                        "description": "unauthorized"
+                    },
+                    "403": {
+                        "description": "principal doesn't have permissions"
+                    }
+                }
+            }
+        },
+        "/user/{id}": {
+            "get": {
+                "description": "获取一个指定ID的用户对象信息",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "用户的ID",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "sucessful",
+                        "schema": {
+                            "$ref": "#/definitions/resUser"
+                        }
+                    },
+                    "400": {
+                        "description": "parameter is not invalid"
+                    },
+                    "401": {
+                        "description": "unauthorized"
+                    },
+                    "403": {
+                        "description": "principal doesn't have permissions"
+                    },
+                    "404": {
+                        "description": "user is not found for this id"
+                    }
+                }
+            },
+            "delete": {
+                "description": "删除一个指定ID的用户对象",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "用户的ID",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "sucessful"
+                    },
+                    "400": {
+                        "description": "parameter is not invalid"
+                    },
+                    "401": {
+                        "description": "unauthorized"
+                    },
+                    "403": {
+                        "description": "principal doesn't have permissions"
+                    },
+                    "404": {
+                        "description": "user is not found for this id"
+                    }
+                }
+            },
+            "put": {
+                "description": "更新一个指定ID的用户对象",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "用户的ID",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "description": "用户的名称",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "pwd",
+                        "in": "query",
+                        "description": "用户密码",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "level",
+                        "in": "query",
+                        "description": "用户权限级别",
+                        "required": false,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "status",
+                        "in": "query",
+                        "description": "用户状态(login)(logout)",
+                        "required": false,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "lastLoginTime",
+                        "in": "query",
+                        "description": "用户最后一次登录时间",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "sucessful"
+                    },
+                    "400": {
+                        "description": "parameter is not invalid"
+                    },
+                    "401": {
+                        "description": "unauthorized"
+                    },
+                    "403": {
+                        "description": "principal doesn't have permissions"
+                    },
+                    "404": {
+                        "description": "user is not found for this id"
                     }
                 }
             }

@@ -2,5 +2,6 @@ this module is designed to be the iot server, currently it's main responsibility
 
 following steps described how to compile and run the server.
 1. configure maven
-2. run command: mvn exec:java
+2.1 run command: "mvn exec:java" OR you can run command "mvn package" and then
+2.2 unzip iotXserver*.zip under target directory, and then execute run.bat in iotXserver*/bin
 3. visit the server by uri: http://localhost:8080/iotx/iotxresource if you are test in your local host

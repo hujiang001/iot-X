@@ -31,7 +31,8 @@ under the License.
       <directory>src/bin</directory>
       <outputDirectory>bin</outputDirectory>
       <includes>
-        <include>*.bat</include>
+        <include>run.bat</include>
+		<include>run.sh</include>
       </includes>
       <lineEnding>dos</lineEnding>
     </fileSet>

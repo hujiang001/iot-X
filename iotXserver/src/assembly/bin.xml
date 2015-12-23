@@ -42,6 +42,13 @@ under the License.
         <include>iotXserver-*.jar</include>
       </includes>
     </fileSet>
+	<fileSet>
+      <directory>target/lib</directory>
+      <outputDirectory>lib</outputDirectory>
+      <includes>
+        <include>*.jar</include>
+      </includes>
+    </fileSet>
   </fileSets>
   <!-- END SNIPPET: fileSets -->
 </assembly>

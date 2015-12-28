@@ -5,8 +5,8 @@ info:
   description: >
     'This project makes the deployment of IOT become more simple, more flexible,
     more powerful.It provides a full set of solutions from sensor to cloud
-    server.  设备的层次定义：device（树莓派）>deviceclass(温度传感器)>equipment(温度传感器1)'
-host: localhost
+    server. '
+host: 'localhost:80'
 paths:
   /authenticationArea:
     post:
@@ -24,7 +24,7 @@ paths:
           type: string
         - name: key
           in: query
-          description: 认证域的key值，user和device通过该key值加入到认证域。
+          description: 认证域的key值，user和controller通过该key值加入到认证域。
           required: true
           type: string
       responses:
@@ -128,23 +128,23 @@ paths:
           description: "principal doesn't have permissions"
         '404':
           description: device is not found for this id
-  /device:
+  /controller:
     get:
-      description: 获取device对象列表
+      description: 获取controller对象列表
       parameters:
         - name: name
           in: query
-          description: 通过设备名称过滤
+          description: 通过控制器名称过滤
           required: false
           type: string
         - name: namePartten
           in: query
-          description: 通过设备名称的正则表达式过滤
+          description: 通过控制器名称的正则表达式过滤
           required: false
           type: string
         - name: state
           in: query
-          description: 通过设备状态过滤
+          description: 通过控制器状态过滤
           required: false
           type: string
         - name: sortField
@@ -159,22 +159,22 @@ paths:
           type: string
         - name: numGet
           in: query
-          description: 指定需要获取的设备个数
+          description: 指定需要获取的控制器个数
           required: false
           type: integer
         - name: numSkip
           in: query
-          description: 指定需要跳过的设备个数
+          description: 指定需要跳过的控制器个数
           required: false
           type: integer
       responses:
         '200':
           description: sucessful
           schema:
-            title: respDevicelist
+            title: respControllerlist
             type: array
             items:
-              $ref: '#/definitions/resDevice'
+              $ref: '#/definitions/resController'
         '400':
           description: parameter is not invalid
         '401':
@@ -182,43 +182,43 @@ paths:
         '403':
           description: "principal doesn't have permissions"
     post:
-      description: 创建一个设备对象
+      description: 创建一个控制器对象
       parameters:
         - name: name
           in: query
-          description: 设备的名称
+          description: 控制器的名称
           required: true
           type: string
         - name: data
           in: query
-          description: 设备数据，满足jason格式，由用户自己定义和解析，系统不感知
+          description: 控制器数据，满足jason格式，由用户自己定义和解析，系统不感知
           required: true
           type: string
       responses:
         '200':
           description: sucessful
           schema:
-            $ref: '#/definitions/resDevice'
+            $ref: '#/definitions/resController'
         '400':
           description: parameter is not invalid
         '401':
           description: unauthorized
         '403':
           description: "principal doesn't have permissions"
-  '/device/{id}':
+  '/controller/{id}':
     get:
-      description: 获取一个指定ID的设备对象信息
+      description: 获取一个指定ID的控制器对象信息
       parameters:
         - name: id
           in: path
-          description: 设备的ID
+          description: 控制器的ID
           required: true
           type: string
       responses:
         '200':
           description: sucessful
           schema:
-            $ref: '#/definitions/resDevice'
+            $ref: '#/definitions/resController'
         '400':
           description: parameter is not invalid
         '401':
@@ -226,13 +226,13 @@ paths:
         '403':
           description: "principal doesn't have permissions"
         '404':
-          description: device is not found for this id
+          description: controller is not found for this id
     delete:
-      description: 删除一个指定ID的设备对象
+      description: 删除一个指定ID的控制器对象
       parameters:
         - name: id
           in: path
-          description: 设备的ID
+          description: 控制器的ID
           required: true
           type: string
       responses:
@@ -245,18 +245,18 @@ paths:
         '403':
           description: "principal doesn't have permissions"
         '404':
-          description: device is not found for this id
+          description: controller is not found for this id
     put:
-      description: 更新一个指定ID的设备对象
+      description: 更新一个指定ID的控制器对象
       parameters:
         - name: id
           in: path
-          description: 设备的ID
+          description: 控制器的ID
           required: true
           type: string
         - name: data
           in: query
-          description: 设备数据，满足jason格式，由用户自己定义和解析，系统不感知
+          description: 控制器数据，满足jason格式，由用户自己定义和解析，系统不感知
           required: true
           type: string
       responses:
@@ -269,7 +269,7 @@ paths:
         '403':
           description: "principal doesn't have permissions"
         '404':
-          description: device is not found for this id
+          description: controller is not found for this id
   /user:
     get:
       description: 获取用户对象列表
@@ -456,50 +456,87 @@ definitions:
         description: 用户权限级别
       status:
         type: integer
-        description: 用户状态(login)(logout)
+        description: 用户鉴权状态(已鉴权)(未鉴权)
       lastLoginTime:
         type: string
-        description: 用户最后一次登录时间
+        description: 用户最后一次鉴权时间
+      timeout:
+        type: integer
+        description: 超时时间，用户一段时间没有访问，会被强行登出，需要重新鉴权。-1表示永久在线。
       AuthenticationAreaid:
         type: array
         description: 用户属于的认证域ID，一个用户可以添加到多个认证域
         items:
           type: string
           description: 用户属于的认证域ID
-  resDevice:
+  resThirdPartyApp:
     type: object
-    description: 设备对象的结构定义
+    description: 第三方APP对象的结构定义
     properties:
       id:
         type: string
-        description: 设备ID
+        description: APP ID
+      key:
+        type: string
+        description: key值，用于鉴权
+      status:
+        type: integer
+        description: APP鉴权状态(已鉴权)(未鉴权)
+      lastLoginTime:
+        type: string
+        description: APP最后一次鉴权时间
+      timeout:
+        type: integer
+        description: 超时时间，APP一段时间没有访问，会被强行登出，需要重新鉴权。-1表示永久在线。
+      AuthenticationAreaid:
+        type: array
+        description: APP属于的认证域ID，一个APP可以添加到多个认证域
+        items:
+          type: string
+          description: APP属于的认证域ID
+  resController:
+    type: object
+    description: 控制器对象的结构定义
+    properties:
+      id:
+        type: string
+        description: 控制器ID
       name:
         type: string
-        description: 设备名称
+        description: 控制器名称
+      description:
+        type: string
+        description: 控制器描述
+      key:
+        type: string
+        description: key值，在创建时由server随机分配，对该控制器的操作需要使用该key值进行鉴权
       AuthenticationAreaid:
         type: string
-        description: 设备属于的认证域ID，一个设备对象只能添加到一个认证域
+        description: 控制器归属的认证域ID，一个控制器对象只能添加到一个认证域
       state:
         type: string
-        description: 设备状态
+        description: 控制器状态
       dataJason:
         type: string
-        description: 设备数据，满足jason格式，由用户自己定义和解析，系统不感知
+        description: 控制器数据，满足jason格式，由用户自己定义和解析，系统不感知
       equipmentClass:
-        $ref: '#/definitions/resEquipmentClass'
-  resEquipmentClass:
+        $ref: '#/definitions/resEquipmentGrp'
+  resEquipmentGrp:
     type: object
-    description: 器件类的结构定义
+    description: 器件组的结构定义
     properties:
       id:
         type: string
-        description: 器件类ID
+        description: 器件组ID
       name:
         type: string
-        description: 器件名称
+        description: 器件组名称
+      description:
+        type: string
+        description: 器件组描述
       dataJason:
         type: string
-        description: 器件类数据，满足jason格式，由用户自己定义和解析，系统不感知
+        description: 器件组数据，满足jason格式，由用户自己定义和解析，系统不感知
       equipment:
         type: array
         items:
@@ -514,6 +551,9 @@ definitions:
       name:
         type: string
         description: 器件名称
+      description:
+        type: string
+        description: 控制描述
       dataJason:
         type: string
         description: 器件数据，满足jason格式，由用户自己定义和解析，系统不感知
@@ -545,3 +585,16 @@ definitions:
         items:
           type: string
           description: 用户ID
+  resOAMapping:
+    type: object
+    description: OAMapping的结构定义
+    properties:
+      id:
+        type: string
+        description: OAMapping ID
+      operatorID:
+        type: string
+        description: 操作者ID
+      auth:
+        type: integer
+        description: 操作权限：监视(0x1)、控制(0x3)、管理(0x7)、超级管理(0xf)

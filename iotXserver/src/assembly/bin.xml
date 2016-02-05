@@ -29,27 +29,44 @@ under the License.
   <fileSets>
     <fileSet>
       <directory>src/bin</directory>
-      <outputDirectory>bin</outputDirectory>
+      <outputDirectory>server</outputDirectory>
       <includes>
-        <include>run.bat</include>
-		<include>run.sh</include>
+        <include>*.bat</include>
+		    <include>*.sh</include>
       </includes>
       <lineEnding>dos</lineEnding>
     </fileSet>
     <fileSet>
+     <directory>src/conf</directory>
+      <outputDirectory>server/conf</outputDirectory>
+      <includes>
+        <include>*.*</include>
+      </includes>
+    </fileSet>
+    <fileSet>
       <directory>target</directory>
-      <outputDirectory>lib</outputDirectory>
+      <outputDirectory>server</outputDirectory>
       <includes>
         <include>iotXserver-*.jar</include>
       </includes>
     </fileSet>
 	<fileSet>
       <directory>target/lib</directory>
+      <outputDirectory>server/lib</outputDirectory>
+      <includes>
+        <include>*.jar</include>
+      </includes>
+      <excludes>
+      	<exclude></exclude>
+      </excludes>
+    </fileSet>
+   <!--fileSet>
+      <directory>target/lib</directory>
       <outputDirectory>lib</outputDirectory>
       <includes>
         <include>*.jar</include>
       </includes>
-    </fileSet>
+    </fileSet-->
   </fileSets>
   <!-- END SNIPPET: fileSets -->
 </assembly>

@@ -1,2 +1,2 @@
 
-$JAVA_HOME/bin/java -Djava.ext.dirs=../lib com.iotx.Main
+"%JAVA_HOME%\bin\java" -Djava.ext.dirs=".;lib" -cp ./*.jar com.iotx.Main

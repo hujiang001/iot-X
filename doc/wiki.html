@@ -1,0 +1,3533 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<style>
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote {
+    margin: 0;
+    padding: 0;
+}
+body {
+    font-family: "Helvetica Neue", Helvetica, "Hiragino Sans GB", Arial, sans-serif;
+    font-size: 13px;
+    line-height: 18px;
+    color: #737373;
+    background-color: white;
+    margin: 10px 13px 10px 13px;
+}
+table {
+	margin: 10px 0 15px 0;
+	border-collapse: collapse;
+}
+td,th {	
+	border: 1px solid #ddd;
+	padding: 3px 10px;
+}
+th {
+	padding: 5px 10px;	
+}
+
+a {
+    color: #0069d6;
+}
+a:hover {
+    color: #0050a3;
+    text-decoration: none;
+}
+a img {
+    border: none;
+}
+p {
+    margin-bottom: 9px;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    color: #404040;
+    line-height: 36px;
+}
+h1 {
+    margin-bottom: 18px;
+    font-size: 30px;
+}
+h2 {
+    font-size: 24px;
+}
+h3 {
+    font-size: 18px;
+}
+h4 {
+    font-size: 16px;
+}
+h5 {
+    font-size: 14px;
+}
+h6 {
+    font-size: 13px;
+}
+hr {
+    margin: 0 0 19px;
+    border: 0;
+    border-bottom: 1px solid #ccc;
+}
+blockquote {
+    padding: 13px 13px 21px 15px;
+    margin-bottom: 18px;
+    font-family:georgia,serif;
+    font-style: italic;
+}
+blockquote:before {
+    content:"\201C";
+    font-size:40px;
+    margin-left:-10px;
+    font-family:georgia,serif;
+    color:#eee;
+}
+blockquote p {
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 18px;
+    margin-bottom: 0;
+    font-style: italic;
+}
+code, pre {
+    font-family: Monaco, Andale Mono, Courier New, monospace;
+}
+code {
+    background-color: #fee9cc;
+    color: rgba(0, 0, 0, 0.75);
+    padding: 1px 3px;
+    font-size: 12px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+}
+pre {
+    display: block;
+    padding: 14px;
+    margin: 0 0 18px;
+    line-height: 16px;
+    font-size: 11px;
+    border: 1px solid #d9d9d9;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+pre code {
+    background-color: #fff;
+    color:#737373;
+    font-size: 11px;
+    padding: 0;
+}
+sup {
+    font-size: 0.83em;
+    vertical-align: super;
+    line-height: 0;
+}
+* {
+	-webkit-print-color-adjust: exact;
+}
+@media screen and (min-width: 914px) {
+    body {
+        width: 854px;
+        margin:10px auto;
+    }
+}
+@media print {
+	body,code,pre code,h1,h2,h3,h4,h5,h6 {
+		color: black;
+	}
+	table, pre {
+		page-break-inside: avoid;
+	}
+}
+</style>
+<title>Overview<span style="font-size:11px">[top↑](#top)</span></title>
+
+</head>
+<body>
+<p><span id="top"></p>
+
+<ul>
+<li><a href="#overview">Overview</a></li>
+<li><a href="#%E4%B8%8B%E8%BD%BD%E5%92%8C%E5%AE%89%E8%A3%85">下载和安装</a></li>
+<li><a href="#%E7%AC%AC%E4%B8%80%E4%B8%AA%E4%BE%8B%E5%AD%90">第一个例子</a></li>
+<li><a href="#RESTFul%E5%AE%9E%E7%8E%B0">RESTFul实现</a></li>
+<li><a href="#%E8%AE%A4%E8%AF%81">认证</a></li>
+<li><a href="#%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86">权限管理</a></li>
+<li><a href="#%E5%AE%89%E5%85%A8%E6%80%A7%E8%80%83%E8%99%91">安全性考虑</a></li>
+<li><a href="#websocket%E6%94%AF%E6%8C%81">websocket支持</a></li>
+<li><a href="#api">RESTFul API参考</a></li>
+</ul>
+
+
+<p><span id="overview"></p>
+
+<h3>Overview<span style="font-size:11px"><a href="#top">top↑</a></span></h3>
+
+<p> iotx是一个开源的物联网平台，提供从设备(传感器)到远端云平台的一整套解决方案。
+ iotx的特点是：</p>
+
+<ol>
+<li>完全开源，遵循MIT lincese，无论是个人还是商用，都可以免费下载使用。<a href="https://github.com/hujiang001/iot-X">去github下载</a></li>
+<li>部署简单灵活，仅需要简单的步骤，用户便可以轻松搭建自己的物联网系统。</li>
+<li>可扩展性强，iotx的设备无关性，使其支持几乎所有设备接入和控制。</li>
+<li>兼容性，iotx兼容目前主流的物联网协议，包括restful、mqtt、coap、alljoyn等。</li>
+<li>提供基于raspberryPi和auduiro的廋终端，并且提供丰富的设备驱动。</li>
+<li>支持大数据处理。</li>
+<li>客户端可定制。</li>
+</ol>
+
+
+<p> iotx同时搭建了服务器（iotx游乐场playground），用户可以轻松接入进行体验：<a href="">去playground体验</a></p>
+
+<p><span id="下载和安装"></p>
+
+<h3>下载和安装<span style="font-size:11px"><a href="#top">top↑</a></span></h3>
+
+<p><span id="第一个例子"></p>
+
+<h3>第一个例子<span style="font-size:11px"><a href="#top">top↑</a></span></h3>
+
+<p><span id="RESTFul实现"></p>
+
+<h3>RESTFul实现<span style="font-size:11px"><a href="#top">top↑</a></span></h3>
+
+<p>iotX支持通过RESTFul方式接入服务器。它是基于tornado实现的http服务。</p>
+
+<ul>
+<li><p>消息格式和携带方式</p>
+
+<p><strong>Request消息</strong> 支持通过http协议的body携带，以JSON格式组织数据。同样，为了某些场景中使用的简便，我们也支持通过URL问号(?)的方式携带参数，这种方式下你需要在URL中携带特殊的参数<code>arg_carrier=uri</code>。两种方式携带的参数定义保持一致。</p>
+
+<blockquote><p>注意，在下面的API参考中，我们只介绍通过body携带的JSON格式</p></blockquote>
+
+<p><strong>Response消息</strong> 通过http协议中的body携带。返回的Response消息中还包含了status信息和错误码。其中错误码是通过header中的<code>retcode</code>参数携带。<a href="#errcode">查看status和错误码的定义</a></p></li>
+<li><p>RESTFul资源定义</p>
+
+<p>参见<a href="#api">RESTFul API参考</a></p></li>
+<li><p>user</p>
+
+<p>user中预留了userDefArea字段，使用者可以自己定义额外的用户信息。我们只定义了一些必须的参数。</p></li>
+<li><p>设备数据上报和查询</p>
+
+<p>通过dataSet实现数据的上报和查询。我们不关心数据的具体含义和内容，仅透传。数据应该由使用者，也就是业务层面来进行定义。</p></li>
+<li><p>command</p>
+
+<p>通过command来实现对设备的远程控制。同样地，我们对command的具体含义也做透传，由使用者去定义。</p>
+
+<blockquote><p>注意，如果不支持websocket，那么http协议无法做到server端主动向设备推送命令，需要设备端轮询command的状态。iotx的廋终端将提供轮询接口</p></blockquote></li>
+</ul>
+
+
+<p><span id="认证"></p>
+
+<h3>认证<span style="font-size:11px"><a href="#top">top↑</a></span></h3>
+
+<p><span id="权限管理"></p>
+
+<h3>权限管理<span style="font-size:11px"><a href="#top">top↑</a></span></h3>
+
+<p><span id="安全性考虑"></p>
+
+<h3>安全性考虑<span style="font-size:11px"><a href="#top">top↑</a></span></h3>
+
+<p><span id="websocket支持"></p>
+
+<h3>websocket支持<span style="font-size:11px"><a href="#top">top↑</a></span></h3>
+
+<p><span id="api"></p>
+
+<h3>RESTFul API 参考<span style="font-size:11px"><a href="#top">top↑</a></span></h3>
+
+<ol>
+<li><a href="#user">user</a></li>
+<li><a href="#userOne">userOne</a></li>
+<li><a href="#device">device</a></li>
+<li><a href="#deviceOne">deviceOne</a></li>
+<li><a href="#sensor">sensor</a></li>
+<li><a href="#sensorOne">sensorOne</a></li>
+<li><a href="#dataSet">dataSet</a></li>
+<li><a href="#commandSet">commandSet</a></li>
+<li><a href="#commandSetOne">commandSetOne</a></li>
+<li><a href="#accessKey">accessKey</a></li>
+<li><a href="#deviceAuth">deviceAuth</a></li>
+<li><a href="#userLogin">userLogin</a></li>
+<li><a href="#userLogout">userLogout</a></li>
+<li><a href="#errcode">错误码&amp;status定义</a></li>
+</ol>
+
+
+<p><span id="user"></p>
+
+<h3>user <span style="font-size:10px"><a href="#api">api list↑</a></span></h3>
+
+<p><strong>URI: </strong><code>/v1.0/users</code></p>
+
+<p><strong>Method List: </strong> <a href="#user_get">GET</a>  <a href="#user_post">POST</a></p>
+
+<hr />
+
+<p><span id="user_get">
+<strong>Method:</strong> GET<span style="font-size:11px"><a href="#user">back↑</a></span></p>
+
+<p><strong>功能描述：</strong>获取user列表</p>
+
+<p><strong>认证方式：</strong>user</p>
+
+<p><strong>权限要求：</strong></p>
+
+<table>
+<thead>
+<tr>
+<th> object </th>
+<th> object_id </th>
+<th> operlist </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td> ‘user’ </td>
+<td> all       </td>
+<td> get      </td>
+</tr>
+</tbody>
+</table>
+
+
+<p>系统默认只有超级管理员有此权限</p>
+
+<p><strong>Request:</strong></p>
+
+<p>JSON</p>
+
+<pre><code>{
+     'sort':'DESC', 
+     'maxNum':0, 
+     'skipNum':0
+ }
+</code></pre>
+
+<table>
+<thead>
+<tr>
+<th></th>
+<th> params </th>
+<th> description </th>
+<th> type    </th>
+<th> default </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>O</td>
+<td>sort   </td>
+<td> 排序方式 DESC\ASC</td>
+<td> string</td>
+<td>  DESC</td>
+</tr>
+<tr>
+<td>M</td>
+<td>maxNum   </td>
+<td> 查询个数</td>
+<td> integer</td>
+<td>  0</td>
+</tr>
+<tr>
+<td>O</td>
+<td>skipNum   </td>
+<td> 查询偏移数，系统会将结果偏移一定数目再获取maxNum条数据。可以使用该参数来分批获取大量数据。</td>
+<td> integer</td>
+<td>  0</td>
+</tr>
+</tbody>
+</table>
+
+
+<p>注意，有些参数是可选的，有而些则是必选的<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup></p>
+
+<p><strong>Response：</strong></p>
+
+<ul>
+<li>body</li>
+</ul>
+
+
+<p>JSON</p>
+
+<pre><code>{
+    'num':0,
+    'isEof':False,
+    'list':[ ] 
+}
+</code></pre>
+
+<table>
+<thead>
+<tr>
+<th> params </th>
+<th> description </th>
+<th> type    </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td> num   </td>
+<td> list的记录条数</td>
+<td> integer</td>
+</tr>
+<tr>
+<td> isEof   </td>
+<td> 是否是最后一条记录</td>
+<td> boolean</td>
+</tr>
+<tr>
+<td> list </td>
+<td> user列表。列表的具体内容参考userOne的GET返回值</td>
+<td>list</td>
+</tr>
+</tbody>
+</table>
+
+
+<ul>
+<li><p>status</p>
+
+<p>参考<a href="#errcode">错误码&amp;status定义</a></p></li>
+<li><p>retcode</p>
+
+<p>参考<a href="#errcode">错误码&amp;status定义</a></p></li>
+</ul>
+
+
+<p><span style="font-size:11px"><a href="#user">back↑</a></p>
+
+<hr />
+
+<p><span id="user_post"></p>
+
+<p><strong>Method:</strong> POST<span style="font-size:11px"><a href="#user">back↑</a></span></p>
+
+<p><strong>功能描述：</strong>创建一个user</p>
+
+<p><strong>认证方式：</strong>user</p>
+
+<p><strong>权限要求：</strong></p>
+
+<table>
+<thead>
+<tr>
+<th> object </th>
+<th> object_id </th>
+<th> operlist </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td> ‘user’ </td>
+<td> all       </td>
+<td> add      </td>
+</tr>
+</tbody>
+</table>
+
+
+<p>系统默认所有人都可以创建用户，即注册用户。</p>
+
+<p><strong>Request:</strong></p>
+
+<p>JSON</p>
+
+<pre><code>{
+     'name':'', 
+     'pwd':‘’，
+     'userDefArea':‘’
+ }
+</code></pre>
+
+<table>
+<thead>
+<tr>
+<th> params </th>
+<th> description </th>
+<th> type    </th>
+<th> default </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td> name   </td>
+<td> 用户名</td>
+<td> string</td>
+<td>  None</td>
+</tr>
+<tr>
+<td> pwd   </td>
+<td> 密码</td>
+<td> string</td>
+<td>  None</td>
+</tr>
+<tr>
+<td> userDefArea   </td>
+<td> 用户自定义域。可以自定义一些用户数据，比如电话号码、住址等，系统不关心仅透传，建议用JSON组织数据。</td>
+<td> string</td>
+<td>  None</td>
+</tr>
+</tbody>
+</table>
+
+
+<p><strong>Response：</strong></p>
+
+<ul>
+<li>body</li>
+</ul>
+
+
+<p>JSON</p>
+
+<pre><code>{
+    'id':0 
+}
+</code></pre>
+
+<table>
+<thead>
+<tr>
+<th> params </th>
+<th> description </th>
+<th> type    </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td> id   </td>
+<td> user id，如果失败，id填0</td>
+<td> integer</td>
+</tr>
+</tbody>
+</table>
+
+
+<ul>
+<li><p>status</p>
+
+<p>参考<a href="#errcode">错误码&amp;status定义</a></p></li>
+<li><p>retcode</p>
+
+<p>参考<a href="#errcode">错误码&amp;status定义</a></p></li>
+</ul>
+
+
+<p><span style="font-size:11px"><a href="#user">back↑</a></span></p>
+
+<hr />
+
+<p><span id="userOne"></p>
+
+<h3>userOne<span style="font-size:11px"><a href="#api">api list↑</a></span></h3>
+
+<p><strong>URI: </strong><code>/v1.0/user/$id</code></p>
+
+<p><strong>Method List: </strong> <a href="#userOne_get">GET</a>  <a href="#userOne_put">PUT</a> <a href="#userOne_delete">DELETE</a></p>
+
+<hr />
+
+<p><span id="userOne_get">
+<strong>Method:</strong> GET<span style="font-size:11px"><a href="#userOne">back↑</a></span></p>
+
+<p><strong>功能描述：</strong>获取一个指定的user信息</p>
+
+<p><strong>认证方式：</strong>user</p>
+
+<p><strong>权限要求：</strong></p>
+
+<table>
+<thead>
+<tr>
+<th> object </th>
+<th> object_id </th>
+<th> operlist </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td> ‘user’ </td>
+<td> id       </td>
+<td> get      </td>
+</tr>
+</tbody>
+</table>
+
+
+<p><strong>Request:</strong></p>
+
+<p>id：从URI中提取</p>
+
+<p><strong>Response：</strong></p>
+
+<ul>
+<li>body</li>
+</ul>
+
+
+<p>JSON</p>
+
+<pre><code>{
+   'id':0,
+   'name':'',
+   'regTime':'',
+   'lastLoginTime':'',
+   'state':'offline',
+   'userDefArea':'',
+   'deviceList':[ ]
+ }
+</code></pre>
+
+<table>
+<thead>
+<tr>
+<th> params </th>
+<th> description </th>
+<th> type    </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td> id   </td>
+<td> user id</td>
+<td> integer</td>
+</tr>
+<tr>
+<td> name   </td>
+<td> user name</td>
+<td> string</td>
+</tr>
+<tr>
+<td> regTime </td>
+<td> user注册时间，也就是post时间.格式："%Y-%m-%d %H:%M:%S"</td>
+<td>string</td>
+</tr>
+<tr>
+<td> lastLoginTime</td>
+<td> user最近一次登录时间.格式："%Y-%m-%d %H:%M:%S"</td>
+<td>string</td>
+</tr>
+<tr>
+<td>state</td>
+<td>user状态。offline\online</td>
+<td>string</td>
+</tr>
+<tr>
+<td>userDefArea</td>
+<td>用户注册时的自定义域</td>
+<td>string</td>
+</tr>
+<tr>
+<td>deviceList</td>
+<td>该用户的deviceId列表</td>
+<td>list</td>
+</tr>
+</tbody>
+</table>
+
+
+<ul>
+<li><p>status</p>
+
+<p>参考<a href="#errcode">错误码&amp;status定义</a></p></li>
+<li><p>retcode</p>
+
+<p>参考<a href="#errcode">错误码&amp;status定义</a></p></li>
+</ul>
+
+
+<p><span style="font-size:11px"><a href="#userOne">back↑</a></span></p>
+
+<hr />
+
+<p><span id="userOne_put">
+<strong>Method:</strong> PUT<span style="font-size:11px"><a href="#userOne">back↑</a></span></p>
+
+<p><strong>功能描述：</strong>更新一个指定的user</p>
+
+<p><strong>认证方式：</strong>user</p>
+
+<p><strong>权限要求：</strong></p>
+
+<table>
+<thead>
+<tr>
+<th> object </th>
+<th> object_id </th>
+<th> operlist </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td> ‘user’ </td>
+<td> id       </td>
+<td> upd      </td>
+</tr>
+</tbody>
+</table>
+
+
+<p><strong>Request:</strong></p>
+
+<p>id：从URI中提取</p>
+
+<p>JSON</p>
+
+<pre><code> {
+     'oldpwd':None, 
+     'pwd':None，
+     'userDefArea':None
+ }
+</code></pre>
+
+<table>
+<thead>
+<tr>
+<th> params </th>
+<th> description </th>
+<th> type    </th>
+<th> default </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td> oldpwd   </td>
+<td> 老的密码，只有修改密码时该值才必须填写</td>
+<td> string</td>
+<td>  None</td>
+</tr>
+<tr>
+<td> pwd   </td>
+<td> 新的密码</td>
+<td> string</td>
+<td>  None</td>
+</tr>
+<tr>
+<td> userDefArea   </td>
+<td> 用户自定义域。</td>
+<td> string</td>
+<td>  None</td>
+</tr>
+</tbody>
+</table>
+
+
+<p><strong>Response：</strong></p>
+
+<ul>
+<li>body</li>
+</ul>
+
+
+<p>{ } or None</p>
+
+<ul>
+<li><p>status</p>
+
+<p>参考<a href="#errcode">错误码&amp;status定义</a></p></li>
+<li><p>retcode</p>
+
+<p>参考<a href="#errcode">错误码&amp;status定义</a></p></li>
+</ul>
+
+
+<p><span style="font-size:11px"><a href="#userOne">back↑</a></span></p>
+
+<hr />
+
+<p><span id="userOne_delete">
+<strong>Method:</strong> DELETE<span style="font-size:11px"><a href="#userOne">back↑</a></span></p>
+
+<p><strong>功能描述：</strong>删除一个指定的user</p>
+
+<p><strong>认证方式：</strong>user</p>
+
+<p><strong>权限要求：</strong></p>
+
+<table>
+<thead>
+<tr>
+<th> object </th>
+<th> object_id </th>
+<th> operlist </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td> ‘user’ </td>
+<td> id       </td>
+<td> del      </td>
+</tr>
+</tbody>
+</table>
+
+
+<p><strong>Request:</strong></p>
+
+<p>id：从URI中提取</p>
+
+<p><strong>Response：</strong></p>
+
+<ul>
+<li>body</li>
+</ul>
+
+
+<p>{ } or None</p>
+
+<ul>
+<li><p>status</p>
+
+<p>参考<a href="#errcode">错误码&amp;status定义</a></p></li>
+<li><p>retcode</p>
+
+<p>参考<a href="#errcode">错误码&amp;status定义</a></p></li>
+</ul>
+
+
+<p><span style="font-size:11px"><a href="#userOne">back↑</a></span></p>
+
+<hr />
+
+<p><span id="device"></p>
+
+<h3>device<span style="font-size:11px"><a href="#api">api list↑</a></span></h3>
+
+<p><strong>URI: </strong><code>/v1.0/devices</code></p>
+
+<p><strong>Method List: </strong> <a href="#device_get">GET</a>  <a href="#device_post">POST</a></p>
+
+<hr />
+
+<p><span id="device_get">
+<strong>Method:</strong> GET<span style="font-size:11px"><a href="#device">back↑</a></span></p>
+
+<p><strong>功能描述：</strong>获取device列表</p>
+
+<p><strong>认证方式：</strong>user</p>
+
+<p><strong>权限要求：</strong></p>
+
+<table>
+<thead>
+<tr>
+<th> object </th>
+<th> object_id </th>
+<th> operlist </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td> ‘device’ </td>
+<td> all       </td>
+<td> get      </td>
+</tr>
+</tbody>
+</table>
+
+
+<p>系统默认只有超级管理员有此权限</p>
+
+<p><strong>Request:</strong></p>
+
+<p>JSON</p>
+
+<pre><code>{
+     'sort':'DESC', 
+     'maxNum':0, 
+     'skipNum':0
+ }
+</code></pre>
+
+<table>
+<thead>
+<tr>
+<th> params </th>
+<th> description </th>
+<th> type    </th>
+<th> default </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td> sort   </td>
+<td> 排序方式 DESC\ASC</td>
+<td> string</td>
+<td>  DESC</td>
+</tr>
+<tr>
+<td> maxNum   </td>
+<td> 查询个数</td>
+<td> integer</td>
+<td>  0</td>
+</tr>
+<tr>
+<td> skipNum   </td>
+<td> 查询偏移数，系统会将结果偏移一定数目再获取maxNum条数据。可以使用该参数来分批获取大量数据。</td>
+<td> integer</td>
+<td>  0</td>
+</tr>
+</tbody>
+</table>
+
+
+<p><strong>Response：</strong></p>
+
+<ul>
+<li>body</li>
+</ul>
+
+
+<p>JSON</p>
+
+<pre><code>{
+    'num':0,
+    'isEof':False,
+    'list':[ ] 
+}
+</code></pre>
+
+<table>
+<thead>
+<tr>
+<th> params </th>
+<th> description </th>
+<th> type    </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td> num   </td>
+<td> list的记录条数</td>
+<td> integer</td>
+</tr>
+<tr>
+<td> isEof   </td>
+<td> 是否是最后一条记录</td>
+<td> boolean</td>
+</tr>
+<tr>
+<td> list </td>
+<td> user列表。列表的具体内容参考deviceOne的GET返回值</td>
+<td>list</td>
+</tr>
+</tbody>
+</table>
+
+
+<ul>
+<li><p>status</p>
+
+<p>参考<a href="#errcode">错误码&amp;status定义</a></p></li>
+<li><p>retcode</p>
+
+<p>参考<a href="#errcode">错误码&amp;status定义</a></p></li>
+</ul>
+
+
+<p><span style="font-size:11px"><a href="#device">back↑</a></span></p>
+
+<hr />
+
+<p><span id="device_post"></p>
+
+<p><strong>Method:</strong> POST<span style="font-size:11px"><a href="#device">back↑</a></span></p>
+
+<p><strong>功能描述：</strong>创建一个device</p>
+
+<p><strong>认证方式：</strong>user和accessKey，accessKey通过<a href="#accessKey_get">GET</a>方法申请</p>
+
+<p><strong>权限要求：</strong></p>
+
+<table>
+<thead>
+<tr>
+<th> object </th>
+<th> object_id </th>
+<th> operlist </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td> ‘device’ </td>
+<td> all       </td>
+<td> add      </td>
+</tr>
+</tbody>
+</table>
+
+
+<p><strong>Request:</strong></p>
+
+<p>JSON</p>
+
+<pre><code>{
+    'name':'',
+    'description':'',
+    'local':'',
+    'latitude':0.0,
+    'longitude':0.0,
+    'userDefArea':''
+}
+</code></pre>
+
+<table>
+<thead>
+<tr>
+<th> params </th>
+<th> description </th>
+<th> type    </th>
+<th> default </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td> name   </td>
+<td> 设备名</td>
+<td> string</td>
+<td>  None</td>
+</tr>
+<tr>
+<td> description   </td>
+<td> 设备描述</td>
+<td> string</td>
+<td>  None</td>
+</tr>
+<tr>
+<td> local</td>
+<td> 设备位置描述</td>
+<td>string</td>
+<td>None</td>
+</tr>
+<tr>
+<td>latitude</td>
+<td>设备所处经度</td>
+<td>float</td>
+<td>0.0</td>
+</tr>
+<tr>
+<td>longitude</td>
+<td>设备所处纬度</td>
+<td>float</td>
+<td>0.0</td>
+</tr>
+<tr>
+<td> userDefArea   </td>
+<td> 设备自定义域。可以自定义一些设备数据，系统不关心仅透传，建议用JSON组织数据。</td>
+<td> string</td>
+<td>  None</td>
+</tr>
+</tbody>
+</table>
+
+
+<p><strong>Response：</strong></p>
+
+<ul>
+<li>body</li>
+</ul>
+
+
+<p>JSON</p>
+
+<pre><code>{
+    'id':0 
+}
+</code></pre>
+
+<table>
+<thead>
+<tr>
+<th> params </th>
+<th> description </th>
+<th> type    </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td> id   </td>
+<td> 设备 id，如果失败，id填0</td>
+<td> integer</td>
+</tr>
+</tbody>
+</table>
+
+
+<ul>
+<li><p>status</p>
+
+<p>参考<a href="#errcode">错误码&amp;status定义</a></p></li>
+<li><p>retcode</p>
+
+<p>参考<a href="#errcode">错误码&amp;status定义</a></p></li>
+</ul>
+
+
+<p><span style="font-size:11px"><a href="#device">back↑</a></span></p>
+
+<hr />
+
+<p><span id="deviceOne"></p>
+
+<h3>deviceOne<span style="font-size:11px"><a href="#api">api list↑</a></span></h3>
+
+<p><strong>URI: </strong><code>/v1.0/device/$id</code></p>
+
+<p><strong>Method List: </strong> <a href="#deviceOne_get">GET</a>  <a href="#deviceOne_put">PUT</a> <a href="#deviceOne_delete">DELETE</a></p>
+
+<hr />
+
+<p><span id="deviceOne_get">
+<strong>Method:</strong> GET<span style="font-size:11px"><a href="#deviceOne">back↑</a></span></p>
+
+<p><strong>功能描述：</strong>获取一个指定的device信息</p>
+
+<p><strong>认证方式：</strong>user</p>
+
+<p><strong>权限要求：</strong></p>
+
+<table>
+<thead>
+<tr>
+<th> object </th>
+<th> object_id </th>
+<th> operlist </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td> ‘device’ </td>
+<td> id       </td>
+<td> get      </td>
+</tr>
+</tbody>
+</table>
+
+
+<p><strong>Request:</strong></p>
+
+<p>id：从URI中提取</p>
+
+<p><strong>Response：</strong></p>
+
+<ul>
+<li>body</li>
+</ul>
+
+
+<p>JSON</p>
+
+<pre><code>{
+    'id':0, 
+    'name':'',
+    'description':'', 
+    'regTime':'', 
+    'local':'Beijing',
+    'latitude':0.0,
+    'longitude':0.0,
+    'userDefArea':'',
+    'userIdList':[ ], 
+    'sensorList':[ ],
+    'key':'' 
+ }
+</code></pre>
+
+<table>
+<thead>
+<tr>
+<th> params </th>
+<th> description </th>
+<th> type    </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td> id   </td>
+<td> device id</td>
+<td> integer</td>
+</tr>
+<tr>
+<td> name   </td>
+<td> device name</td>
+<td> string</td>
+</tr>
+<tr>
+<td> description   </td>
+<td> device的描述信息</td>
+<td> string</td>
+</tr>
+<tr>
+<td> regTime </td>
+<td> device注册时间，也就是post时间.格式："%Y-%m-%d %H:%M:%S"</td>
+<td>string</td>
+</tr>
+<tr>
+<td> local</td>
+<td> 设备位置描述</td>
+<td>string</td>
+</tr>
+<tr>
+<td>latitude</td>
+<td>设备所处经度</td>
+<td>float</td>
+</tr>
+<tr>
+<td>longitude</td>
+<td>设备所处纬度</td>
+<td>float</td>
+</tr>
+<tr>
+<td> userDefArea   </td>
+<td> 设备自定义域</td>
+<td> string</td>
+</tr>
+<tr>
+<td>userIdList</td>
+<td>该设备所属的用户Id列表</td>
+<td>list</td>
+</tr>
+<tr>
+<td>sensorList</td>
+<td>该设备下的sensorId列表</td>
+<td>list</td>
+</tr>
+<tr>
+<td>key</td>
+<td>该设备的accessKey</td>
+<td>string</td>
+</tr>
+</tbody>
+</table>
+
+
+<ul>
+<li><p>status</p>
+
+<p>参考<a href="#errcode">错误码&amp;status定义</a></p></li>
+<li><p>retcode</p>
+
+<p>参考<a href="#errcode">错误码&amp;status定义</a></p></li>
+</ul>
+
+
+<p><span style="font-size:11px"><a href="#deviceOne">back↑</a></span></p>
+
+<hr />
+
+<p><span id="deviceOne_put">
+<strong>Method:</strong> PUT<span style="font-size:11px"><a href="#deviceOne">back↑</a></span></p>
+
+<p><strong>功能描述：</strong>更新一个指定的device</p>
+
+<p><strong>认证方式：</strong>user</p>
+
+<p><strong>权限要求：</strong></p>
+
+<table>
+<thead>
+<tr>
+<th> object </th>
+<th> object_id </th>
+<th> operlist </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td> ‘device’ </td>
+<td> id       </td>
+<td> upd      </td>
+</tr>
+</tbody>
+</table>
+
+
+<p><strong>Request:</strong></p>
+
+<p>id：从URI中提取</p>
+
+<p>JSON</p>
+
+<pre><code>{
+    'name':'',
+    'description':'', 
+    'local':'Beijing',
+    'latitude':0.0,
+    'longitude':0.0,
+    'userDefArea':''
+ }
+</code></pre>
+
+<table>
+<thead>
+<tr>
+<th> params </th>
+<th> description </th>
+<th> type    </th>
+<th>default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td> name   </td>
+<td> device name</td>
+<td> string</td>
+<td>None</td>
+</tr>
+<tr>
+<td> local</td>
+<td> 设备位置描述</td>
+<td>string</td>
+<td>None</td>
+</tr>
+<tr>
+<td>latitude</td>
+<td>设备所处经度</td>
+<td>float</td>
+<td>None</td>
+</tr>
+<tr>
+<td>longitude</td>
+<td>设备所处纬度</td>
+<td>float</td>
+<td>None</td>
+</tr>
+<tr>
+<td> userDefArea   </td>
+<td> 设备自定义域</td>
+<td> string</td>
+<td>None</td>
+</tr>
+</tbody>
+</table>
+
+
+<p><strong>Response：</strong></p>
+
+<ul>
+<li>body</li>
+</ul>
+
+
+<p>{ } or None</p>
+
+<ul>
+<li><p>status</p>
+
+<p>参考<a href="#errcode">错误码&amp;status定义</a></p></li>
+<li><p>retcode</p>
+
+<p>参考<a href="#errcode">错误码&amp;status定义</a></p></li>
+</ul>
+
+
+<p><span style="font-size:11px"><a href="#deviceOne">back↑</a></span></p>
+
+<hr />
+
+<p><span id="deviceOne_delete">
+<strong>Method:</strong> DELETE<span style="font-size:11px"><a href="#deviceOne">back↑</a></span></p>
+
+<p><strong>功能描述：</strong>删除一个指定的device</p>
+
+<p><strong>认证方式：</strong>user</p>
+
+<p><strong>权限要求：</strong></p>
+
+<table>
+<thead>
+<tr>
+<th> object </th>
+<th> object_id </th>
+<th> operlist </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td> ‘device’ </td>
+<td> id       </td>
+<td> del      </td>
+</tr>
+</tbody>
+</table>
+
+
+<p><strong>Request:</strong></p>
+
+<p>id：从URI中提取</p>
+
+<p><strong>Response：</strong></p>
+
+<ul>
+<li>body</li>
+</ul>
+
+
+<p>{ } or None</p>
+
+<ul>
+<li><p>status</p>
+
+<p>参考<a href="#errcode">错误码&amp;status定义</a></p></li>
+<li><p>retcode</p>
+
+<p>参考<a href="#errcode">错误码&amp;status定义</a></p></li>
+</ul>
+
+
+<p><span style="font-size:11px"><a href="#deviceOne">back↑</a></span></p>
+
+<hr />
+
+<p><span id="sensor"></p>
+
+<h3>sensor<span style="font-size:11px"><a href="#api">api list↑</a></span></h3>
+
+<p><strong>URI: </strong><code>/v1.0/device/$deviceId/sensors</code></p>
+
+<p><strong>Method List: </strong> <a href="#sensor_get">GET</a>  <a href="#sensor_post">POST</a></p>
+
+<hr />
+
+<p><span id="sensor_get">
+<strong>Method:</strong> GET<span style="font-size:11px"><a href="#sensor">back↑</a></span></p>
+
+<p><strong>功能描述：</strong>获取指定device下的sensor列表</p>
+
+<p><strong>认证方式：</strong>user</p>
+
+<p><strong>权限要求：</strong></p>
+
+<table>
+<thead>
+<tr>
+<th> object </th>
+<th> object_id </th>
+<th> operlist </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td> ‘device’ </td>
+<td> deviceId  </td>
+<td> get      </td>
+</tr>
+<tr>
+<td> ‘sensor’ </td>
+<td> all       </td>
+<td> get      </td>
+</tr>
+</tbody>
+</table>
+
+
+<p>首先必须拥有所属device的get权限，同时也需要拥有sensor的get权限。</p>
+
+<p><strong>Request:</strong></p>
+
+<p>deviceId：从URI中提取</p>
+
+<p>JSON</p>
+
+<pre><code>{
+     'sort':'DESC', 
+     'maxNum':0, 
+     'skipNum':0
+ }
+</code></pre>
+
+<table>
+<thead>
+<tr>
+<th> params </th>
+<th> description </th>
+<th> type    </th>
+<th> default </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td> sort   </td>
+<td> 排序方式 DESC\ASC</td>
+<td> string</td>
+<td>  DESC</td>
+</tr>
+<tr>
+<td> maxNum   </td>
+<td> 查询个数</td>
+<td> integer</td>
+<td>  0</td>
+</tr>
+<tr>
+<td> skipNum   </td>
+<td> 查询偏移数，系统会将结果偏移一定数目再获取maxNum条数据。可以使用该参数来分批获取大量数据。</td>
+<td> integer</td>
+<td>  0</td>
+</tr>
+</tbody>
+</table>
+
+
+<p><strong>Response：</strong></p>
+
+<ul>
+<li>body</li>
+</ul>
+
+
+<p>JSON</p>
+
+<pre><code>{
+    'num':0,
+    'isEof':False,
+    'list':[ ] 
+}
+</code></pre>
+
+<table>
+<thead>
+<tr>
+<th> params </th>
+<th> description </th>
+<th> type    </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td> num   </td>
+<td> list的记录条数</td>
+<td> integer</td>
+</tr>
+<tr>
+<td> isEof   </td>
+<td> 是否是最后一条记录</td>
+<td> boolean</td>
+</tr>
+<tr>
+<td> list </td>
+<td> sensor列表。列表的具体内容参考sensorOne的GET返回值</td>
+<td>list</td>
+</tr>
+</tbody>
+</table>
+
+
+<ul>
+<li><p>status</p>
+
+<p>参考<a href="#errcode">错误码&amp;status定义</a></p></li>
+<li><p>retcode</p>
+
+<p>参考<a href="#errcode">错误码&amp;status定义</a></p></li>
+</ul>
+
+
+<p><span style="font-size:11px"><a href="#sensor">back↑</a></span></p>
+
+<hr />
+
+<p><span id="sensor_post"></p>
+
+<p><strong>Method:</strong> POST<span style="font-size:11px"><a href="#sensor">back↑</a></span></p>
+
+<p><strong>功能描述：</strong>创建一个指定device的sensor</p>
+
+<p><strong>认证方式：</strong>user</p>
+
+<p><strong>权限要求：</strong></p>
+
+<table>
+<thead>
+<tr>
+<th> object </th>
+<th> object_id </th>
+<th> operlist </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td> ‘device’ </td>
+<td> deviceId       </td>
+<td> upd      </td>
+</tr>
+</tbody>
+</table>
+
+
+<p>拥有所属device的upd权限即可添加sensor</p>
+
+<p><strong>Request:</strong></p>
+
+<p>deviceId：从URI中提取</p>
+
+<p>JSON</p>
+
+<pre><code>{
+    'name':'',
+    'description':'',
+    'userDefArea':''
+}
+</code></pre>
+
+<table>
+<thead>
+<tr>
+<th> params </th>
+<th> description </th>
+<th> type    </th>
+<th> default </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td> name   </td>
+<td> sensor名</td>
+<td> string</td>
+<td>  None</td>
+</tr>
+<tr>
+<td> description   </td>
+<td> sensor描述</td>
+<td> string</td>
+<td>  None</td>
+</tr>
+<tr>
+<td> userDefArea   </td>
+<td> sensor自定义域。可以自定义一些sensor信息，系统不关心仅透传，建议用JSON组织数据。</td>
+<td> string</td>
+<td>  None</td>
+</tr>
+</tbody>
+</table>
+
+
+<p><strong>Response：</strong></p>
+
+<ul>
+<li>body</li>
+</ul>
+
+
+<p>JSON</p>
+
+<pre><code>{
+    'id':0 
+}
+</code></pre>
+
+<table>
+<thead>
+<tr>
+<th> params </th>
+<th> description </th>
+<th> type    </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td> id   </td>
+<td> sensor id，如果失败，id填0</td>
+<td> integer</td>
+</tr>
+</tbody>
+</table>
+
+
+<ul>
+<li><p>status</p>
+
+<p>参考<a href="#errcode">错误码&amp;status定义</a></p></li>
+<li><p>retcode</p>
+
+<p>参考<a href="#errcode">错误码&amp;status定义</a></p></li>
+</ul>
+
+
+<p><span style="font-size:11px"><a href="#sensor">back↑</a></span></p>
+
+<hr />
+
+<p><span id="sensorOne"></p>
+
+<h3>sensorOne<span style="font-size:11px"><a href="#api">api list↑</a></span></h3>
+
+<p><strong>URI: </strong><code>/v1.0/device/$deviceId/sensor/$sensorId</code></p>
+
+<p><strong>Method List: </strong> <a href="#sensorOne_get">GET</a>  <a href="#sensorOne_put">PUT</a> <a href="#sensorOne_delete">DELETE</a></p>
+
+<hr />
+
+<p><span id="sensorOne_get">
+<strong>Method:</strong> GET<span style="font-size:11px"><a href="#sensorOne">back↑</a></span></p>
+
+<p><strong>功能描述：</strong>获取一个指定的sensor信息</p>
+
+<p><strong>认证方式：</strong>user</p>
+
+<p><strong>权限要求：</strong></p>
+
+<table>
+<thead>
+<tr>
+<th> object </th>
+<th> object_id </th>
+<th> operlist </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td> ‘device’ </td>
+<td> deviceId       </td>
+<td> get      </td>
+</tr>
+<tr>
+<td> ‘sensor’ </td>
+<td> sensorId       </td>
+<td> get      </td>
+</tr>
+</tbody>
+</table>
+
+
+<p>首先必须拥有所属device的get权限，同时也需要拥有sensor的get权限。</p>
+
+<p><strong>Request:</strong></p>
+
+<p>deviceId：从URI中提取</p>
+
+<p>sensorId：从URI中提取</p>
+
+<p><strong>Response：</strong></p>
+
+<ul>
+<li>body</li>
+</ul>
+
+
+<p>JSON</p>
+
+<pre><code>{
+    'id':0, 
+    'name':'',
+    'description':'', 
+    'regTime':'', 
+    'deviceId':0,
+    'userDefArea':'' 
+ }
+</code></pre>
+
+<table>
+<thead>
+<tr>
+<th> params </th>
+<th> description </th>
+<th> type    </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td> id   </td>
+<td> sensor id</td>
+<td> integer</td>
+</tr>
+<tr>
+<td> name   </td>
+<td> sensor name</td>
+<td> string</td>
+</tr>
+<tr>
+<td> description   </td>
+<td> sensor的描述信息</td>
+<td> string</td>
+</tr>
+<tr>
+<td> regTime </td>
+<td> sensor注册时间，也就是post时间.格式："%Y-%m-%d %H:%M:%S"</td>
+<td>string</td>
+</tr>
+<tr>
+<td>deviceId</td>
+<td>所属device的Id</td>
+<td>integer</td>
+</tr>
+<tr>
+<td> userDefArea   </td>
+<td> sensor自定义域</td>
+<td> string</td>
+</tr>
+</tbody>
+</table>
+
+
+<ul>
+<li><p>status</p>
+
+<p>参考<a href="#errcode">错误码&amp;status定义</a></p></li>
+<li><p>retcode</p>
+
+<p>参考<a href="#errcode">错误码&amp;status定义</a></p></li>
+</ul>
+
+
+<p><span style="font-size:11px"><a href="#sensorOne">back↑</a></span></p>
+
+<hr />
+
+<p><span id="sensorOne_put">
+<strong>Method:</strong> PUT<span style="font-size:11px"><a href="#sensorOne">back↑</a></span></p>
+
+<p><strong>功能描述：</strong>更新一个指定sensor的信息</p>
+
+<p><strong>认证方式：</strong>user</p>
+
+<p><strong>权限要求：</strong></p>
+
+<table>
+<thead>
+<tr>
+<th> object </th>
+<th> object_id </th>
+<th> operlist </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td> ‘device’ </td>
+<td> deviceId       </td>
+<td> upd      </td>
+</tr>
+<tr>
+<td> ‘sensor’ </td>
+<td> sensorId       </td>
+<td> upd      </td>
+</tr>
+</tbody>
+</table>
+
+
+<p>首先必须拥有所属device的upd权限，同时也需要拥有sensor的upd权限。</p>
+
+<p><strong>Request:</strong></p>
+
+<p>deviceId：从URI中提取</p>
+
+<p>sensorId：从URI中提取</p>
+
+<p>JSON</p>
+
+<pre><code>{
+    'name':'',
+    'description':'', 
+    'userDefArea':''
+ }
+</code></pre>
+
+<table>
+<thead>
+<tr>
+<th> params </th>
+<th> description </th>
+<th> type    </th>
+<th>default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td> name   </td>
+<td> sensor name</td>
+<td> string</td>
+<td>None</td>
+</tr>
+<tr>
+<td> description</td>
+<td> sensor描述信息</td>
+<td>string</td>
+<td>None</td>
+</tr>
+<tr>
+<td> userDefArea   </td>
+<td> sensor自定义域</td>
+<td> string</td>
+<td>None</td>
+</tr>
+</tbody>
+</table>
+
+
+<p><strong>Response：</strong></p>
+
+<ul>
+<li>body</li>
+</ul>
+
+
+<p>{ } or None</p>
+
+<ul>
+<li><p>status</p>
+
+<p>参考<a href="#errcode">错误码&amp;status定义</a></p></li>
+<li><p>retcode</p>
+
+<p>参考<a href="#errcode">错误码&amp;status定义</a></p></li>
+</ul>
+
+
+<p><span style="font-size:11px"><a href="#sensorOne">back↑</a></span></p>
+
+<hr />
+
+<p><span id="sensorOne_delete">
+<strong>Method:</strong> DELETE<span style="font-size:11px"><a href="#sensorOne">back↑</a></span></p>
+
+<p><strong>功能描述：</strong>删除一个指定的sensor</p>
+
+<p><strong>认证方式：</strong>user</p>
+
+<p><strong>权限要求：</strong></p>
+
+<table>
+<thead>
+<tr>
+<th> object </th>
+<th> object_id </th>
+<th> operlist </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td> ‘device’ </td>
+<td> deviceId       </td>
+<td> upd      </td>
+</tr>
+<tr>
+<td> ‘sensor’ </td>
+<td> sensorId       </td>
+<td> del      </td>
+</tr>
+</tbody>
+</table>
+
+
+<p>首先必须拥有所属device的upd权限，同时也需要拥有sensor的del权限。</p>
+
+<p><strong>Request:</strong></p>
+
+<p>deviceId：从URI中提取</p>
+
+<p>sensorId：从URI中提取</p>
+
+<p><strong>Response：</strong></p>
+
+<ul>
+<li>body</li>
+</ul>
+
+
+<p>{ } or None</p>
+
+<ul>
+<li><p>status</p>
+
+<p>参考<a href="#errcode">错误码&amp;status定义</a></p></li>
+<li><p>retcode</p>
+
+<p>参考<a href="#errcode">错误码&amp;status定义</a></p></li>
+</ul>
+
+
+<p><span style="font-size:11px"><a href="#sensorOne">back↑</a></span></p>
+
+<hr />
+
+<p><span id="dataSet"></p>
+
+<h3>dataSet<span style="font-size:11px"><a href="#api">api list↑</a></span></h3>
+
+<p><strong>URI: </strong><code>/v1.0/device/$deviceId/sensor/$sensorId/dataSet</code></p>
+
+<p><strong>Method List: </strong> <a href="#dataSet_get">GET</a>  <a href="#dataSet_post">POST</a> <a href="#dataSet_put">PUT</a> <a href="#dataSet_delete">DELETE</a></p>
+
+<hr />
+
+<p><span id="dataSet_get">
+<strong>Method:</strong> GET<span style="font-size:11px"><a href="#dataSet">back↑</a></span></p>
+
+<p><strong>功能描述：</strong>获取data</p>
+
+<p><strong>认证方式：</strong>user或者accessKey</p>
+
+<p><strong>权限要求：</strong></p>
+
+<table>
+<thead>
+<tr>
+<th> object </th>
+<th> object_id </th>
+<th> operlist </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td> ‘device’ </td>
+<td> deviceId       </td>
+<td> get      </td>
+</tr>
+<tr>
+<td> ‘sensor’ </td>
+<td> sensorId       </td>
+<td> get      </td>
+</tr>
+</tbody>
+</table>
+
+
+<p>首先必须拥有所属device的get权限，同时也需要拥有sensor的get权限。</p>
+
+<p><strong>Request:</strong></p>
+
+<p>deviceId：从URI中提取</p>
+
+<p>sensorId：从URI中提取</p>
+
+<p>JSON</p>
+
+<pre><code>{
+    'sort':'desc',
+    'orderBy':'',
+    'maxNum':0,
+    'skipNum':0,
+    'createTimeStart':None,
+    'createTimeEnd':None,
+    'lastUpdateTimeStart':None,
+    'lastUpdateTimeEnd':None,
+    'key':None,
+    'valueMin':None,
+    'valueMax':None 
+ }
+</code></pre>
+
+<table>
+<thead>
+<tr>
+<th> params </th>
+<th> description </th>
+<th> type    </th>
+<th>default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td> sort   </td>
+<td> 排序方式，DESC\ASC</td>
+<td> string</td>
+<td>DESC</td>
+</tr>
+<tr>
+<td> orderBy</td>
+<td>排序字段，CREATE_TIME\LAST_UPDATE_TIME\KEY\VALUE </td>
+<td> string</td>
+<td>CREATE_TIME</td>
+</tr>
+<tr>
+<td> maxNum   </td>
+<td>最多返回的记录条数</td>
+<td> integer</td>
+<td>0</td>
+</tr>
+<tr>
+<td> skipNum </td>
+<td> 偏移的记录条数</td>
+<td>integer</td>
+<td>0</td>
+</tr>
+<tr>
+<td>createTimeStart</td>
+<td>过滤条件：创建时间大于等于值。格式："%Y-%m-%d %H:%M:%S"</td>
+<td>string</td>
+<td>None</td>
+</tr>
+<tr>
+<td>createTimeEnd</td>
+<td>过滤条件：创建时间小于等于值。格式："%Y-%m-%d %H:%M:%S"</td>
+<td>string</td>
+<td>None</td>
+</tr>
+<tr>
+<td>key</td>
+<td>过滤条件：key值等于</td>
+<td>string</td>
+<td>None</td>
+</tr>
+<tr>
+<td>valueMin</td>
+<td>过滤条件：value值大于等于值</td>
+<td>string</td>
+<td>None</td>
+</tr>
+<tr>
+<td>valueMax</td>
+<td>过滤条件：value值小于等于值</td>
+<td>string</td>
+<td>None</td>
+</tr>
+</tbody>
+</table>
+
+
+<p><strong>Response：</strong></p>
+
+<ul>
+<li>body</li>
+</ul>
+
+
+<p>JSON</p>
+
+<pre><code>{
+    'num':0,
+    'isEof':False,
+    'list':[ 
+            {
+                'createTime':'',
+                'lastUpdateTime':'',
+                'key':'', 
+                'value':''
+            }
+    ] 
+}
+</code></pre>
+
+<table>
+<thead>
+<tr>
+<th> params </th>
+<th> description </th>
+<th> type    </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td> num   </td>
+<td> list的记录条数</td>
+<td> integer</td>
+</tr>
+<tr>
+<td> isEof   </td>
+<td> 是否是最后一条记录</td>
+<td> boolean</td>
+</tr>
+<tr>
+<td> list </td>
+<td> data列表</td>
+<td>list</td>
+</tr>
+<tr>
+<td> createTime </td>
+<td> 创建时间，格式："%Y-%m-%d %H:%M:%S"</td>
+<td>string</td>
+</tr>
+<tr>
+<td> lastUpdateTime </td>
+<td> 最后一次更新时间，格式："%Y-%m-%d %H:%M:%S"</td>
+<td>string</td>
+</tr>
+<tr>
+<td> key </td>
+<td> data的key值，由使用者自己定义，系统不感知</td>
+<td>string</td>
+</tr>
+<tr>
+<td> value </td>
+<td> data的value值</td>
+<td>string</td>
+</tr>
+</tbody>
+</table>
+
+
+<ul>
+<li><p>status</p>
+
+<p>参考<a href="#errcode">错误码&amp;status定义</a></p></li>
+<li><p>retcode</p>
+
+<p>参考<a href="#errcode">错误码&amp;status定义</a></p></li>
+</ul>
+
+
+<p><span style="font-size:11px"><a href="#dataSet">back↑</a></span></p>
+
+<hr />
+
+<p><span id="dataSet_post">
+<strong>Method:</strong> POST<span style="font-size:11px"><a href="#dataSet">back↑</a></span></p>
+
+<p><strong>功能描述：</strong>创建一个data</p>
+
+<p><strong>认证方式：</strong>user或者accessKey</p>
+
+<p><strong>权限要求：</strong></p>
+
+<table>
+<thead>
+<tr>
+<th> object </th>
+<th> object_id </th>
+<th> operlist </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td> ‘device’ </td>
+<td> deviceId       </td>
+<td> upd      </td>
+</tr>
+<tr>
+<td> ‘sensor’ </td>
+<td> sensorId       </td>
+<td> upd      </td>
+</tr>
+</tbody>
+</table>
+
+
+<p>首先必须拥有所属device的upd权限，同时也需要拥有sensor的upd权限。</p>
+
+<p><strong>Request:</strong></p>
+
+<p>deviceId：从URI中提取</p>
+
+<p>sensorId：从URI中提取</p>
+
+<p>JSON</p>
+
+<pre><code>{
+    'key':None,
+    'value':None
+ }
+</code></pre>
+
+<table>
+<thead>
+<tr>
+<th> params </th>
+<th> description </th>
+<th> type    </th>
+<th>default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>key</td>
+<td>data的key值，使用者定义，系统不感知</td>
+<td>string</td>
+<td>None</td>
+</tr>
+<tr>
+<td>value</td>
+<td>data的value</td>
+<td>string</td>
+<td>None</td>
+</tr>
+</tbody>
+</table>
+
+
+<p><strong>Response：</strong></p>
+
+<ul>
+<li>body</li>
+</ul>
+
+
+<p>JSON</p>
+
+<pre><code>{
+    'createTime':‘’
+}
+</code></pre>
+
+<table>
+<thead>
+<tr>
+<th> params </th>
+<th> description </th>
+<th> type    </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td> createTime </td>
+<td> 创建时间，格式："%Y-%m-%d %H:%M:%S"</td>
+<td>string</td>
+</tr>
+</tbody>
+</table>
+
+
+<ul>
+<li><p>status</p>
+
+<p>参考<a href="#errcode">错误码&amp;status定义</a></p></li>
+<li><p>retcode</p>
+
+<p>参考<a href="#errcode">错误码&amp;status定义</a></p></li>
+</ul>
+
+
+<p><span style="font-size:11px"><a href="#dataSet">back↑</a></span></p>
+
+<hr />
+
+<p><span id="dataSet_put">
+<strong>Method:</strong> PUT<span style="font-size:11px"><a href="#dataSet">back↑</a></span></p>
+
+<p><strong>功能描述：</strong>更新一个或多个data</p>
+
+<p><strong>认证方式：</strong>user或者accessKey</p>
+
+<p><strong>权限要求：</strong></p>
+
+<table>
+<thead>
+<tr>
+<th> object </th>
+<th> object_id </th>
+<th> operlist </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td> ‘device’ </td>
+<td> deviceId       </td>
+<td> upd      </td>
+</tr>
+<tr>
+<td> ‘sensor’ </td>
+<td> sensorId       </td>
+<td> upd      </td>
+</tr>
+</tbody>
+</table>
+
+
+<p>首先必须拥有所属device的upd权限，同时也需要拥有sensor的upd权限。</p>
+
+<p><strong>Request:</strong></p>
+
+<p>deviceId：从URI中提取</p>
+
+<p>sensorId：从URI中提取</p>
+
+<p>JSON</p>
+
+<pre><code>{
+    ‘createTime’:None
+    'key':None,
+    'value':None
+ }
+</code></pre>
+
+<table>
+<thead>
+<tr>
+<th></th>
+<th> params </th>
+<th> description </th>
+<th> type    </th>
+<th>default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>O</td>
+<td>createTime </td>
+<td> 创建时间作为过滤条件，格式："%Y-%m-%d %H:%M:%S"</td>
+<td>string</td>
+<td>None</td>
+</tr>
+<tr>
+<td>M</td>
+<td>key</td>
+<td>data的key值</td>
+<td>string</td>
+<td>None</td>
+</tr>
+<tr>
+<td>M</td>
+<td>value</td>
+<td>data的value</td>
+<td>string</td>
+<td>None</td>
+</tr>
+</tbody>
+</table>
+
+
+<p><strong>Response：</strong></p>
+
+<ul>
+<li>body</li>
+</ul>
+
+
+<p>{ } or None</p>
+
+<ul>
+<li><p>status</p>
+
+<p>参考<a href="#errcode">错误码&amp;status定义</a></p></li>
+<li><p>retcode</p>
+
+<p>参考<a href="#errcode">错误码&amp;status定义</a></p></li>
+</ul>
+
+
+<p><span style="font-size:11px"><a href="#dataSet">back↑</a></span></p>
+
+<hr />
+
+<p><span id="dataSet_delete">
+<strong>Method:</strong> DELETE<span style="font-size:11px"><a href="#dataSet">back↑</a></span></p>
+
+<p><strong>功能描述：</strong>删除一个或多个data</p>
+
+<p><strong>认证方式：</strong>user或者accessKey</p>
+
+<p><strong>权限要求：</strong></p>
+
+<table>
+<thead>
+<tr>
+<th> object </th>
+<th> object_id </th>
+<th> operlist </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td> ‘device’ </td>
+<td> deviceId       </td>
+<td> upd      </td>
+</tr>
+<tr>
+<td> ‘sensor’ </td>
+<td> sensorId       </td>
+<td> upd      </td>
+</tr>
+</tbody>
+</table>
+
+
+<p>首先必须拥有所属device的upd权限，同时也需要拥有sensor的upd权限。</p>
+
+<p><strong>Request:</strong></p>
+
+<p>deviceId：从URI中提取</p>
+
+<p>sensorId：从URI中提取</p>
+
+<p>JSON</p>
+
+<pre><code>{
+    ‘createTimeStart’:None,
+    ‘createTimeEnd’:None
+    'key':None
+ }
+</code></pre>
+
+<table>
+<thead>
+<tr>
+<th></th>
+<th> params </th>
+<th> description </th>
+<th> type    </th>
+<th>default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>O</td>
+<td>createTimeStart </td>
+<td> 创建时间作为过滤条件，格式："%Y-%m-%d %H:%M:%S"</td>
+<td>string</td>
+<td>None</td>
+</tr>
+<tr>
+<td>O</td>
+<td>createTimeEnd </td>
+<td> 创建时间作为过滤条件，格式："%Y-%m-%d %H:%M:%S"</td>
+<td>string</td>
+<td>None</td>
+</tr>
+<tr>
+<td>O</td>
+<td>key</td>
+<td>data的key值</td>
+<td>string</td>
+<td>None</td>
+</tr>
+</tbody>
+</table>
+
+
+<p><strong>Response：</strong></p>
+
+<ul>
+<li>body</li>
+</ul>
+
+
+<p>{ } or None</p>
+
+<ul>
+<li><p>status</p>
+
+<p>参考<a href="#errcode">错误码&amp;status定义</a></p></li>
+<li><p>retcode</p>
+
+<p>参考<a href="#errcode">错误码&amp;status定义</a></p></li>
+</ul>
+
+
+<p><span style="font-size:11px"><a href="#dataSet">back↑</a></span></p>
+
+<hr />
+
+<p><span id="commandSet"></p>
+
+<h3>commandSet<span style="font-size:11px"><a href="#api">api list↑</a></span></h3>
+
+<p><strong>URI: </strong><code>/v1.0/device/$deviceId/sensor/$sensorId/commandSet</code></p>
+
+<p><strong>Method List: </strong> <a href="#commandSet_get">GET</a>  <a href="#commandSet_post">POST</a></p>
+
+<hr />
+
+<p><span id="commandSet_get">
+<strong>Method:</strong> GET<span style="font-size:11px"><a href="#commandSet">back↑</a></span></p>
+
+<p><strong>功能描述：</strong>获取指定sensor的command列表</p>
+
+<p><strong>认证方式：</strong>user或者accessKey</p>
+
+<p><strong>权限要求：</strong></p>
+
+<table>
+<thead>
+<tr>
+<th> object </th>
+<th> object_id </th>
+<th> operlist </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td> ‘device’ </td>
+<td> deviceId  </td>
+<td> get      </td>
+</tr>
+<tr>
+<td> ‘sensor’ </td>
+<td> sensorI   </td>
+<td> get      </td>
+</tr>
+</tbody>
+</table>
+
+
+<p>首先必须拥有所属device的get权限，同时也需要拥有sensor的get权限。</p>
+
+<p><strong>Request:</strong></p>
+
+<p>deviceId：从URI中提取</p>
+
+<p>sensorId：从URI中提取</p>
+
+<p>JSON</p>
+
+<pre><code>{
+     'sort':'DESC', 
+     'maxNum':0, 
+     'skipNum':0
+ }
+</code></pre>
+
+<table>
+<thead>
+<tr>
+<th> params </th>
+<th> description </th>
+<th> type    </th>
+<th> default </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td> sort   </td>
+<td> 排序方式 DESC\ASC</td>
+<td> string</td>
+<td>  DESC</td>
+</tr>
+<tr>
+<td> maxNum   </td>
+<td> 查询个数</td>
+<td> integer</td>
+<td>  0</td>
+</tr>
+<tr>
+<td> skipNum   </td>
+<td> 查询偏移数，系统会将结果偏移一定数目再获取maxNum条数据。可以使用该参数来分批获取大量数据。</td>
+<td> integer</td>
+<td>  0</td>
+</tr>
+</tbody>
+</table>
+
+
+<p><strong>Response：</strong></p>
+
+<ul>
+<li>body</li>
+</ul>
+
+
+<p>JSON</p>
+
+<pre><code>{
+    'num':0,
+    'isEof':False,
+    'list':[ ] 
+}
+</code></pre>
+
+<table>
+<thead>
+<tr>
+<th> params </th>
+<th> description </th>
+<th> type    </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td> num   </td>
+<td> list的记录条数</td>
+<td> integer</td>
+</tr>
+<tr>
+<td> isEof   </td>
+<td> 是否是最后一条记录</td>
+<td> boolean</td>
+</tr>
+<tr>
+<td> list </td>
+<td> command列表。列表的具体内容参考commandSetOne的GET返回值</td>
+<td>list</td>
+</tr>
+</tbody>
+</table>
+
+
+<ul>
+<li><p>status</p>
+
+<p>参考<a href="#errcode">错误码&amp;status定义</a></p></li>
+<li><p>retcode</p>
+
+<p>参考<a href="#errcode">错误码&amp;status定义</a></p></li>
+</ul>
+
+
+<p><span style="font-size:11px"><a href="#commandSet">back↑</a></span></p>
+
+<hr />
+
+<p><span id="commandSet_post"></p>
+
+<p><strong>Method:</strong> POST<span style="font-size:11px"><a href="#commandSet">back↑</a></span></p>
+
+<p><strong>功能描述：</strong>创建一个指定sensor的command</p>
+
+<p><strong>认证方式：</strong>user或者accessKey</p>
+
+<p><strong>权限要求：</strong></p>
+
+<table>
+<thead>
+<tr>
+<th> object </th>
+<th> object_id </th>
+<th> operlist </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td> ‘device’ </td>
+<td> deviceId  </td>
+<td> upd      </td>
+</tr>
+<tr>
+<td> ‘sensor’ </td>
+<td> sensorId  </td>
+<td> command      </td>
+</tr>
+</tbody>
+</table>
+
+
+<p>首先必须拥有所属device的upd权限，同时也需要拥有sensor的command权限。</p>
+
+<p><strong>Request:</strong></p>
+
+<p>deviceId：从URI中提取</p>
+
+<p>sensorId：从URI中提取</p>
+
+<p>JSON</p>
+
+<pre><code>{
+    'command':'',
+    'value':''
+}
+</code></pre>
+
+<table>
+<thead>
+<tr>
+<th></th>
+<th> params </th>
+<th> description </th>
+<th> type    </th>
+<th> default </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>M</td>
+<td> command   </td>
+<td> command名字，系统不感知具体含义，使用者自己定义</td>
+<td> string</td>
+<td>  None</td>
+</tr>
+<tr>
+<td>M</td>
+<td> value   </td>
+<td> command的值</td>
+<td> string</td>
+<td>  None</td>
+</tr>
+</tbody>
+</table>
+
+
+<p><strong>Response：</strong></p>
+
+<ul>
+<li>body</li>
+</ul>
+
+
+<p>{ } or None</p>
+
+<ul>
+<li><p>status</p>
+
+<p>参考<a href="#errcode">错误码&amp;status定义</a></p></li>
+<li><p>retcode</p>
+
+<p>参考<a href="#errcode">错误码&amp;status定义</a></p></li>
+</ul>
+
+
+<p><span style="font-size:11px"><a href="#commandSet">back↑</a></span></p>
+
+<hr />
+
+<p><span id="commandSetOne"></p>
+
+<h3>commandSetOne<span style="font-size:11px"><a href="#api">api list↑</a></span></h3>
+
+<p><strong>URI: </strong><code>/v1.0/device/$deviceId/sensor/$sensorId/commandSet/$command</code></p>
+
+<p><strong>Method List: </strong> <a href="#commandSetOne_get">GET</a>  <a href="#commandSetOne_put">PUT</a> <a href="#commandSetOne_delete">DELETE</a></p>
+
+<hr />
+
+<p><span id="commandSetOne_get">
+<strong>Method:</strong> GET<span style="font-size:11px"><a href="#commandSetOne">back↑</a></span></p>
+
+<p><strong>功能描述：</strong>获取一个指定的command信息</p>
+
+<p><strong>认证方式：</strong>user或者accessKey</p>
+
+<p><strong>权限要求：</strong></p>
+
+<table>
+<thead>
+<tr>
+<th> object </th>
+<th> object_id </th>
+<th> operlist </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td> ‘device’ </td>
+<td> deviceId       </td>
+<td> get      </td>
+</tr>
+<tr>
+<td> ‘sensor’ </td>
+<td> sensorId       </td>
+<td> get      </td>
+</tr>
+</tbody>
+</table>
+
+
+<p>首先必须拥有所属device的get权限，同时也需要拥有sensor的get权限。</p>
+
+<p><strong>Request:</strong></p>
+
+<p>deviceId：从URI中提取</p>
+
+<p>sensorId：从URI中提取</p>
+
+<p>command：从URI中提取</p>
+
+<p><strong>Response：</strong></p>
+
+<ul>
+<li>body</li>
+</ul>
+
+
+<p>JSON</p>
+
+<pre><code>{
+    'command':'',
+    'value':'',
+    'createTime':'',
+    'lastUpdateTime':''
+ }
+</code></pre>
+
+<table>
+<thead>
+<tr>
+<th> params </th>
+<th> description </th>
+<th> type    </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td> command   </td>
+<td> command名</td>
+<td> string</td>
+</tr>
+<tr>
+<td> value   </td>
+<td> command的值</td>
+<td> string</td>
+</tr>
+<tr>
+<td> createTime </td>
+<td> command创建的时间.格式："%Y-%m-%d %H:%M:%S"</td>
+<td>string</td>
+</tr>
+<tr>
+<td> lastUpdateTime </td>
+<td> command最近一次更新的时间.格式："%Y-%m-%d %H:%M:%S"</td>
+<td>string</td>
+</tr>
+</tbody>
+</table>
+
+
+<ul>
+<li><p>status</p>
+
+<p>参考<a href="#errcode">错误码&amp;status定义</a></p></li>
+<li><p>retcode</p>
+
+<p>参考<a href="#errcode">错误码&amp;status定义</a></p></li>
+</ul>
+
+
+<p><span style="font-size:11px"><a href="#commandSetOne">back↑</a></span></p>
+
+<hr />
+
+<p><span id="commandSetOne_put">
+<strong>Method:</strong> PUT<span style="font-size:11px"><a href="#commandSetOne">back↑</a></span></p>
+
+<p><strong>功能描述：</strong>更新一个指定command的值</p>
+
+<p><strong>认证方式：</strong>user</p>
+
+<p><strong>权限要求：</strong></p>
+
+<table>
+<thead>
+<tr>
+<th> object </th>
+<th> object_id </th>
+<th> operlist </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td> ‘device’ </td>
+<td> deviceId       </td>
+<td> upd      </td>
+</tr>
+<tr>
+<td> ‘sensor’ </td>
+<td> sensorId       </td>
+<td> command      </td>
+</tr>
+</tbody>
+</table>
+
+
+<p>首先必须拥有所属device的upd权限，同时也需要拥有sensor的command权限。</p>
+
+<p><strong>Request:</strong></p>
+
+<p>deviceId：从URI中提取</p>
+
+<p>sensorId：从URI中提取</p>
+
+<p>command：从URI中提取</p>
+
+<p>JSON</p>
+
+<pre><code>{
+    'value':''
+ }
+</code></pre>
+
+<table>
+<thead>
+<tr>
+<th></th>
+<th> params </th>
+<th> description </th>
+<th> type    </th>
+<th>default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>M</td>
+<td> value   </td>
+<td>command的值</td>
+<td> string</td>
+<td>None</td>
+</tr>
+</tbody>
+</table>
+
+
+<p><strong>Response：</strong></p>
+
+<ul>
+<li>body</li>
+</ul>
+
+
+<p>{ } or None</p>
+
+<ul>
+<li><p>status</p>
+
+<p>参考<a href="#errcode">错误码&amp;status定义</a></p></li>
+<li><p>retcode</p>
+
+<p>参考<a href="#errcode">错误码&amp;status定义</a></p></li>
+</ul>
+
+
+<p><span style="font-size:11px"><a href="#commandSetOne">back↑</a></span></p>
+
+<hr />
+
+<p><span id="commandSetOne_delete">
+<strong>Method:</strong> DELETE<span style="font-size:11px"><a href="#commandSetOne">back↑</a></span></p>
+
+<p><strong>功能描述：</strong>删除一个指定的command</p>
+
+<p><strong>认证方式：</strong>user或者accessKey</p>
+
+<p><strong>权限要求：</strong></p>
+
+<table>
+<thead>
+<tr>
+<th> object </th>
+<th> object_id </th>
+<th> operlist </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td> ‘device’ </td>
+<td> deviceId       </td>
+<td> upd      </td>
+</tr>
+<tr>
+<td> ‘sensor’ </td>
+<td> sensorId       </td>
+<td> command      </td>
+</tr>
+</tbody>
+</table>
+
+
+<p>首先必须拥有所属device的upd权限，同时也需要拥有sensor的command权限。</p>
+
+<p><strong>Request:</strong></p>
+
+<p>deviceId：从URI中提取</p>
+
+<p>sensorId：从URI中提取</p>
+
+<p>command：从URI中提取</p>
+
+<p><strong>Response：</strong></p>
+
+<ul>
+<li>body</li>
+</ul>
+
+
+<p>{ } or None</p>
+
+<ul>
+<li><p>status</p>
+
+<p>参考<a href="#errcode">错误码&amp;status定义</a></p></li>
+<li><p>retcode</p>
+
+<p>参考<a href="#errcode">错误码&amp;status定义</a></p></li>
+</ul>
+
+
+<p><span style="font-size:11px"><a href="#commandSetOne">back↑</a></span></p>
+
+<hr />
+
+<p><span id="deviceAuth"></p>
+
+<h3>deviceAuth<span style="font-size:11px"><a href="#api">api list↑</a></span></h3>
+
+<p><strong>URI: </strong><code>/v1.0/deviceauth</code></p>
+
+<p><strong>Method List: </strong> <a href="#deviceAuth_post">POST</a>  <a href="#deviceAuth_delete">DELETE</a></p>
+
+<hr />
+
+<p><span id="deviceAuth_post">
+<strong>Method:</strong> POST<span style="font-size:11px"><a href="#deviceauth">back↑</a></span></p>
+
+<p><strong>功能描述：</strong>为一个user增加device的权限</p>
+
+<p><strong>认证方式：</strong>user</p>
+
+<p><strong>权限要求：</strong></p>
+
+<table>
+<thead>
+<tr>
+<th> object </th>
+<th> object_id </th>
+<th> operlist </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td> ‘device’ </td>
+<td> deviceId  </td>
+<td> privilege_add      </td>
+</tr>
+</tbody>
+</table>
+
+
+<p><strong>Request:</strong></p>
+
+<p>JSON</p>
+
+<pre><code>{
+     'deviceId':0, 
+     'userId':0, 
+     'privilege':None,
+     'role':None
+ }
+</code></pre>
+
+<table>
+<thead>
+<tr>
+<th></th>
+<th> params </th>
+<th> description </th>
+<th> type    </th>
+<th> default </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>M</td>
+<td> deviceId</td>
+<td> device id</td>
+<td> integer</td>
+<td>  0</td>
+</tr>
+<tr>
+<td>M</td>
+<td> userId   </td>
+<td> user id</td>
+<td> integer</td>
+<td>  0</td>
+</tr>
+<tr>
+<td>O</td>
+<td> privilege   </td>
+<td> 该device的操作权限列表，以'|'分隔。权限的取值请参考<a href="#%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86">权限管理</a></td>
+<td> string</td>
+<td>  None</td>
+</tr>
+<tr>
+<td>O</td>
+<td> role   </td>
+<td>用户角色。角色的定义请参考<a href="#%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86">权限管理</a></td>
+<td> string</td>
+<td>  None</td>
+</tr>
+</tbody>
+</table>
+
+
+<blockquote><p>注意，privilege和role两个参数二选一即可，如果两个都有效，那么系统以privilege为准。</p></blockquote>
+
+<p><strong>Response：</strong></p>
+
+<ul>
+<li>body</li>
+</ul>
+
+
+<p>{ } or None</p>
+
+<ul>
+<li><p>status</p>
+
+<p>参考<a href="#errcode">错误码&amp;status定义</a></p></li>
+<li><p>retcode</p>
+
+<p>参考<a href="#errcode">错误码&amp;status定义</a></p></li>
+</ul>
+
+
+<p><span style="font-size:11px"><a href="#deviceAuth">back↑</a></span></p>
+
+<hr />
+
+<p><span id="deviceAuth_delete">
+<strong>Method:</strong> DELETE<span style="font-size:11px"><a href="#deviceauth">back↑</a></span></p>
+
+<p><strong>功能描述：</strong>删除use的一个device的权限</p>
+
+<p><strong>认证方式：</strong>user</p>
+
+<p><strong>权限要求：</strong></p>
+
+<table>
+<thead>
+<tr>
+<th> object </th>
+<th> object_id </th>
+<th> operlist </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td> ‘device’ </td>
+<td> deviceId  </td>
+<td> privilege_del      </td>
+</tr>
+</tbody>
+</table>
+
+
+<p><strong>Request:</strong></p>
+
+<p>JSON</p>
+
+<pre><code>{
+     'deviceId':0, 
+     'userId':0
+ }
+</code></pre>
+
+<table>
+<thead>
+<tr>
+<th></th>
+<th> params </th>
+<th> description </th>
+<th> type    </th>
+<th> default </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>M</td>
+<td> deviceId</td>
+<td> device id</td>
+<td> integer</td>
+<td>  0</td>
+</tr>
+<tr>
+<td>M</td>
+<td> userId   </td>
+<td> user id</td>
+<td> integer</td>
+<td>  0</td>
+</tr>
+</tbody>
+</table>
+
+
+<blockquote><p>注意，目前不支持删除单个权限，如果权限变更，需要全部删除后再重新添加</p></blockquote>
+
+<p><strong>Response：</strong></p>
+
+<ul>
+<li>body</li>
+</ul>
+
+
+<p>{ } or None</p>
+
+<ul>
+<li><p>status</p>
+
+<p>参考<a href="#errcode">错误码&amp;status定义</a></p></li>
+<li><p>retcode</p>
+
+<p>参考<a href="#errcode">错误码&amp;status定义</a></p></li>
+</ul>
+
+
+<p><span style="font-size:11px"><a href="#deviceAuth">back↑</a></span></p>
+
+<hr />
+
+<p><span id="accessKey"></p>
+
+<h3>accessKey<span style="font-size:11px"><a href="#api">api list↑</a></span></h3>
+
+<p><strong>URI: </strong><code>/v1.0/accessKey</code></p>
+
+<p><strong>Method List: </strong> <a href="#accessKey_get">GET</a></p>
+
+<hr />
+
+<p><span id="accessKey_get">
+<strong>Method:</strong> GET<span style="font-size:11px"><a href="#accessKey">back↑</a></span></p>
+
+<p><strong>功能描述：</strong>申请一个accessKey</p>
+
+<p><strong>认证方式：</strong>user</p>
+
+<p><strong>权限要求：</strong></p>
+
+<p>系统默认登录用户即可申请accessKey</p>
+
+<p><strong>Request:</strong></p>
+
+<p>JSON</p>
+
+<pre><code>{
+     'userId':0
+ }
+</code></pre>
+
+<table>
+<thead>
+<tr>
+<th></th>
+<th> params </th>
+<th> description </th>
+<th> type    </th>
+<th> default </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>M</td>
+<td> userId   </td>
+<td> user id</td>
+<td> integer</td>
+<td>  0</td>
+</tr>
+</tbody>
+</table>
+
+
+<p><strong>Response：</strong></p>
+
+<ul>
+<li>body</li>
+</ul>
+
+
+<p>JSON</p>
+
+<pre><code>{
+     'key':''
+ }
+</code></pre>
+
+<table>
+<thead>
+<tr>
+<th>params </th>
+<th> description </th>
+<th> type    </th>
+<th> default </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td> key   </td>
+<td> 申请成功的key，如果失败则返回None</td>
+<td> string</td>
+<td>  None</td>
+</tr>
+</tbody>
+</table>
+
+
+<ul>
+<li><p>status</p>
+
+<p>参考<a href="#errcode">错误码&amp;status定义</a></p></li>
+<li><p>retcode</p>
+
+<p>参考<a href="#errcode">错误码&amp;status定义</a></p></li>
+</ul>
+
+
+<p><span style="font-size:11px"><a href="#accessKey">back↑</a></span></p>
+
+<hr />
+
+<p><span id="userLogin"></p>
+
+<h3>userLogin<span style="font-size:11px"><a href="#api">api list↑</a></span></h3>
+
+<p><strong>URI: </strong><code>/v1.0/userLogin</code></p>
+
+<p><strong>Method List: </strong> <a href="#userLogin_post">POST</a></p>
+
+<hr />
+
+<p><span id="userLogin_post">
+<strong>Method:</strong> POST<span style="font-size:11px"><a href="#userLogin">back↑</a></span></p>
+
+<p><strong>功能描述：</strong> user登录</p>
+
+<p><strong>认证方式：</strong> None</p>
+
+<p><strong>权限要求：</strong></p>
+
+<p>None</p>
+
+<p><strong>Request:</strong></p>
+
+<p>JSON</p>
+
+<pre><code>{
+     'name':None,
+     'pwd':None
+ }
+</code></pre>
+
+<table>
+<thead>
+<tr>
+<th></th>
+<th> params </th>
+<th> description </th>
+<th> type    </th>
+<th> default </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>M</td>
+<td> name   </td>
+<td> user name</td>
+<td> string</td>
+<td>  None</td>
+</tr>
+<tr>
+<td>M</td>
+<td> pwd   </td>
+<td> user password</td>
+<td> string</td>
+<td>  None</td>
+</tr>
+</tbody>
+</table>
+
+
+<p><strong>Response：</strong></p>
+
+<ul>
+<li>body</li>
+</ul>
+
+
+<p>JSON</p>
+
+<pre><code>{
+     'id':0
+ }
+</code></pre>
+
+<table>
+<thead>
+<tr>
+<th>params </th>
+<th> description </th>
+<th> type    </th>
+<th> default </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td> id   </td>
+<td> user id</td>
+<td> integer</td>
+<td>  0</td>
+</tr>
+</tbody>
+</table>
+
+
+<ul>
+<li><p>status</p>
+
+<p>参考<a href="#errcode">错误码&amp;status定义</a></p></li>
+<li><p>retcode</p>
+
+<p>参考<a href="#errcode">错误码&amp;status定义</a></p></li>
+</ul>
+
+
+<p><span style="font-size:11px"><a href="#userLogin">back↑</a></span></p>
+
+<hr />
+
+<p><span id="userLogout"></p>
+
+<h3>userLogout<span style="font-size:11px"><a href="#api">api list↑</a></span></h3>
+
+<p><strong>URI: </strong><code>/v1.0/userLogout/$id</code></p>
+
+<p><strong>Method List: </strong> <a href="#userLogout_post">POST</a></p>
+
+<hr />
+
+<p><span id="userLogout_post">
+<strong>Method:</strong> POST<span style="font-size:11px"><a href="#userLogout">back↑</a></span></p>
+
+<p><strong>功能描述：</strong> user登出</p>
+
+<p><strong>认证方式：</strong> user</p>
+
+<p><strong>权限要求：</strong></p>
+
+<p>None</p>
+
+<p><strong>Request:</strong></p>
+
+<p>id：从URI中提取</p>
+
+<p><strong>Response：</strong></p>
+
+<ul>
+<li>body</li>
+</ul>
+
+
+<p>{ } or None</p>
+
+<ul>
+<li><p>status</p>
+
+<p>参考<a href="#errcode">错误码&amp;status定义</a></p></li>
+<li><p>retcode</p>
+
+<p>参考<a href="#errcode">错误码&amp;status定义</a></p></li>
+</ul>
+
+
+<p><span style="font-size:11px"><a href="#userLogout">back↑</a></span></p>
+
+<hr />
+
+<p><span id="errcode"></p>
+
+<h3>错误码&amp;status定义<span style="font-size:11px"><a href="#api">api list↑</a></span></h3>
+
+<blockquote><p>注意：错误码是通过HTTP头里面的‘retcode’字段携带。</p></blockquote>
+
+<ul>
+<li><p>status</p>
+
+<p>200 - OK</p>
+
+<p>401 - 处理失败，详细信息以retcode为准。</p>
+
+<p>500 - 服务器处理异常，详细信息以retcode为准。</p></li>
+<li><p>retcode</p>
+
+<p>‘USER_OFFLINE’：user没有登录，或者用户名密码认证失败</p>
+
+<p>‘NO_PRIVILEGE’：用户没有操作权限</p></li>
+</ul>
+
+<div class="footnotes">
+<hr/>
+<ol>
+<li id="fn:1">
+<p>O:optional  M:Mandatory<a href="#fnref:1" rev="footnote">&#8617;</a></p></li>
+</ol>
+</div>
+
+</body>
+</html>

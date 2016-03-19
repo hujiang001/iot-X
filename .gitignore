@@ -1,0 +1,6 @@
+/iotx/playground/*
+/examples/*
+*.log
+*.db
+*.DS_Store
+*.pyc

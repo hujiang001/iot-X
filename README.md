@@ -25,10 +25,10 @@ The project is based on the framework of tornado, make sure your environment is 
 
 1. modify the user configuration parameters in /iotx/configure.py
 
-* start the service
+2. start the service
 
-    cd ./iotx
-    python server.py
+        cd ./iotx
+        python server.py
 
 After the service starts, it can be operated through the API interface, the use of API  please refer to our Developer's Guide.
 

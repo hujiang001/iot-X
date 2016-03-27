@@ -37,3 +37,5 @@ authenticate_timeout = 10*60  #unit:second
 accessKey_num_total = 1024
 accessKey_num_oneUser = 5 #number of keys one user can alloc
 accessKey_num_device = 5 #number of devices one key can access
+
+accessControlAllowOrigin = '*' #Cross-Origin Resource Sharing (CORS)

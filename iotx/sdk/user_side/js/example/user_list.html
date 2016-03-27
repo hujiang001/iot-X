@@ -1,0 +1,103 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <script type="text/javascript" src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script type="text/javascript" src="../iotx.js"></script>
+    <title>user list</title>
+    <style type="text/css">
+        table.gridtable {
+            font-family: verdana,arial,sans-serif;
+            font-size:11px;
+            color:#333333;
+            border-width: 1px;
+            border-color: #666666;
+            border-collapse: collapse;
+        }
+        table.gridtable th {
+            border-width: 1px;
+            padding: 8px;
+            border-style: solid;
+            border-color: #666666;
+            background-color: #dedede;
+        }
+        table.gridtable td {
+            border-width: 1px;
+            padding: 8px;
+            border-style: solid;
+            border-color: #666666;
+            background-color: #ffffff;
+        }
+    </style>
+</head>
+<body>
+<div align="center" >
+    <table class="gridtable" border="1" id="list">
+        <tr>
+            <th>id</th>
+            <th>name</th>
+            <th>status</th>
+            <th>userDefArea</th>
+            <th>regTime</th>
+            <th>lastLoginTime</th>
+        </tr>
+
+    </table>
+    <button id="listall">ListAll</button>
+    <button id="clearall">ClearAll</button>
+</div>
+<div align="center">
+    <textarea rows="10" cols="40" id="trace" style="color:#398439; background-color: #080808"></textarea>
+</div>
+<script type="text/javascript">
+    var traceBuf = "";
+
+    function refreshTrace(msg){
+        traceBuf += msg;
+        $("#trace").text(traceBuf);
+        $("#trace").scrollTop($("#trace")[0].scrollHeight);
+    }
+
+    function showOneUser(user){
+        $("#list").append("<tr><td></td><td></td><td></td><td></td> <td></td> <td></td> </tr>");
+        var trName = "#list tr:last ";
+        $(trName+"td:eq(0)").text(user["id"]);
+        $(trName+"td:eq(1)").text(user["name"]);
+        $(trName+"td:eq(2)").text(user["state"]);
+        $(trName+"td:eq(3)").text(user["userDefArea"]);
+        $(trName+"td:eq(4)").text(user["regTime"]);
+        $(trName+"td:eq(5)").text(user["lastLoginTime"]);
+    }
+    $("#clearall").click(
+            function(){
+                $("#list tr:gt(0)").remove();
+            }
+    );
+    $("#listall").click(
+       function(){
+           $("#list tr:gt(0)").remove();
+           send({
+                "method":"GET",
+                "url":makeUrl("user"),
+                "urlparas":{"maxNum":100,"sort":"ASC"},
+                "header":{"user":"root","pwd":"!23jd34Xdk_=#d"},
+                "success":function(data){
+                    refreshTrace("receive success ack from server:\r\n"
+                            + "  " + data +"\r\n");
+                    var jsonData = eval("("+data+")");
+                    for(var i=0; i<jsonData["num"];i++){
+                        showOneUser(jsonData["list"][i]);
+                    }
+
+                },
+                "error":function(data,status,ret){
+                    refreshTrace("receive failure ack from server:\r\n"
+                            + "  " +String(status)+" "+ret+" "+ data +"\r\n");
+                }
+           });
+        }
+    );
+
+</script>
+</body>
+</html>

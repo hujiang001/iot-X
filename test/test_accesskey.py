@@ -1,4 +1,7 @@
 #-*-coding=utf8-*-
+import sys
+reload(sys)
+sys.setdefaultencoding('utf8')
 from framework import TestFrameworkClass
 
 class myTestCases(TestFrameworkClass):
@@ -44,7 +47,7 @@ class myTestCases(TestFrameworkClass):
         """
         key len is 60
         """
-        id = self.createOneUser(self.user1)
+        id = self.createOneUser(self.user1,isUrl=False)
         key = self.getOneKey(id,self.user1)
         self.assertEqual(60,len(key))
 

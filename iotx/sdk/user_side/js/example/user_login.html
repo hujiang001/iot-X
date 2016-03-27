@@ -1,0 +1,56 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <script type="text/javascript" src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script type="text/javascript" src="../iotx.js"></script>
+    <title>user login</title>
+</head>
+<body>
+<div align="center" >
+    <table>
+        <tr>
+            <td>name:</td>
+            <td><input type="text" id="name"></td>
+        </tr>
+        <tr>
+            <td>password:</td>
+            <td><input type="password" id="pwd"></td>
+        </tr>
+    </table>
+    <p><input type="button" value="login" id="reg"></p>
+</div>
+<div align="center">
+    <textarea rows="10" cols="40" id="trace" style="color:#398439; background-color: #080808"></textarea>
+</div>
+<script type="text/javascript">
+    var traceBuf = "";
+    function refreshTrace(msg){
+        traceBuf += msg;
+        $("#trace").text(traceBuf);
+        $("#trace").scrollTop($("#trace")[0].scrollHeight);
+    }
+    $("#reg").click(
+       function user_regist(){
+
+           send({
+                "method":"POST",
+                "url":makeUrl("userLogin"),
+                "data":{"name":$("#name").val(),
+                        "pwd":$("#pwd").val()},
+                //"header":{"user":"root","pwd":"!23jd34Xdk_=#d"},
+                "success":function(data){
+                    refreshTrace("receive success ack from server:\r\n"
+                            + "  " + data +"\r\n");
+                },
+                "error":function(data,status,ret){
+                    refreshTrace("receive failure ack from server:\r\n"
+                            + "  " +String(status)+" "+ret+" "+ data +"\r\n");
+                }
+           });
+        }
+    );
+
+</script>
+</body>
+</html>

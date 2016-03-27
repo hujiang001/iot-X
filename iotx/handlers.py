@@ -32,7 +32,7 @@ import json
 import sys
 
 from tornado import web,escape
-
+import configure
 import authManager
 import database
 import msgbuilder
@@ -61,6 +61,20 @@ class baseHandle(web.RequestHandler):
         'userexist':{'status':401, 'code':'USER_EXIST'},
         'keyconflict':{'status':401, 'code':'KEY_CONFLICT'},
     }
+
+    #Cross-Origin Resource Sharing (CORS) support
+    def write(self, chunk):
+        self.set_header('Server','iotX-1.0')
+        self.set_header('Access-Control-Allow-Origin', configure.accessControlAllowOrigin)
+        self.set_header('Access-Control-Allow-Methods', 'GET,POST,OPTIONS,PUT,DELETE')
+        self.set_header('Access-Control-Allow-Headers', 'user,pwd,accessKey')
+        self.set_header('Access-Control-Expose-Headers','retcode')
+        self.set_header('Access-Control-Allow-Credentials', 'true')
+        self.set_header('Access-Control-Max-Age','1800')
+        super(baseHandle, self).write(chunk)
+
+    def options(self, *args, **kwargs):
+        self.write("")
 
     def toString(self,codingStr):
         if type(codingStr) is not str:
@@ -105,6 +119,7 @@ class baseHandle(web.RequestHandler):
         """
         get argument from body. body should be json format
         """
+        #print self.request.body
         try:
             bodyDecode = json.loads(self.request.body)
             #print bodyDecode
@@ -262,6 +277,7 @@ class usersHandle(baseHandle):
                 #该user对自己拥有管理员权限
                 privilegeM.priv_add(masterRole='administrator',masterId=id,object='user',objectId=id)
         else:
+            log.logInfo("name is null")
             responseApi['id'] = 0
 
         if id is None:

@@ -35,7 +35,7 @@ class TestFrameworkClass(unittest.TestCase):
     def serverThread(self):
         #close log output
         from tools import log
-        log.logSwitch('close')
+        #log.logSwitch('close')
         ServerClass.instance().run()
 
     def runFramework(self):

@@ -35,7 +35,7 @@ class TestFrameworkClass(unittest.TestCase):
     def serverThread(self):
         #close log output
         from tools import log
-        #log.logSwitch('close')
+        log.logSwitch('close')
         ServerClass.instance().run()
 
     def runFramework(self):
@@ -57,6 +57,10 @@ class TestFrameworkClass(unittest.TestCase):
         #初始化权限管理模块
         privilegeM.priv_init()
 
+    def toUnicode(self,codingStr):
+        if type(codingStr) is not str:
+            return codingStr
+        return codingStr.encode('unicode-escape')
 
     def send(self,method,resource,carrier='uri',body=None,userAuth=None,isSuperUser=False,accessKey=None):
         ret = {'status':None, 'retcode':None,'body':None}
@@ -64,11 +68,11 @@ class TestFrameworkClass(unittest.TestCase):
         headers = {"Content-type": "application/x-www-form-urlencoded",
                    "Accept": "text/plain"}
         if isSuperUser:
-            headers['user']=configure.super_user_name
-            headers['pwd']=configure.super_user_password
+            headers['user']=self.toUnicode(configure.super_user_name)
+            headers['pwd']=self.toUnicode(configure.super_user_password)
         elif userAuth:
-            headers['user']=userAuth['user']
-            headers['pwd']=userAuth['pwd']
+            headers['user']=self.toUnicode(userAuth['user'])
+            headers['pwd']=self.toUnicode(userAuth['pwd'])
 
         if accessKey:
             headers['accessKey']=accessKey
@@ -133,6 +137,19 @@ class TestFrameworkClass(unittest.TestCase):
         self.assertIsNotNone(ret['body'])
         self.assertIsNot(0,ret['body']['id'])
         return ret['body']['id']
+
+    def createOneUserAndLogin(self,user,isUrl=True):
+        ret = self.createOneUser(user,isUrl)
+        self.userLogin(user)
+        return ret
+
+    def userLogin(self,user):
+        login = {
+            'name':user['name'],
+            'pwd':user['pwd']
+        }
+        ret = self.normalUserSendMsgWithBody('POST','/v1.0/userLogin',None,body=login)
+        self.assertEqual(200,ret['status'])
 
     def createOneDevice(self,device,user,accessKey,isUri=True):
         auth = {

@@ -84,7 +84,7 @@ class baseHandle(web.RequestHandler):
     def toUnicode(self,codingStr):
         if type(codingStr) is not str:
             return codingStr
-        return unicode(codingStr)
+        return codingStr.encode('unicode-escape')
 
     """
     http protocal can use uri or body to carry arguments. iotx support both methods.
@@ -145,8 +145,8 @@ class baseHandle(web.RequestHandler):
         pwd = self.request.headers.get('pwd')
         if (user is None) or (pwd is None):
             return 0
-        user = self.toUnicode(user)
-        pwd = self.toUnicode(pwd)
+        user = self.toString(user)
+        pwd = self.toString(pwd)
         ret,userId = authManager.userAuthByNamePwd(user,pwd)
         if error.ERR_CODE_OK_ != ret:
             return 0

@@ -52,6 +52,8 @@ def db_getConn():
     if __dbConnPool__.has_key(str(id)):
         return __dbConnPool__[str(id)]
     path = configure.path_root + "/db/SERVER.db"
+    if not os.path.exists(configure.path_root+"/db/"):
+        os.mkdir(configure.path_root+"/db/")
     myconn = sqlite3.connect(path)
     __dbConnPool__[str(id)] = myconn
     return myconn

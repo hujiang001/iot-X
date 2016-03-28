@@ -28,7 +28,6 @@ SOFTWARE.
 """
 
 import time
-
 import util
 
 LOG_LEVEL_MSG = 0x1
@@ -41,8 +40,10 @@ __switch__ = 0xffffffff
 
 def __logInit():
     global __fp__
-    import configure
+    import configure,os
     logDir = configure.path_root + '/log/'
+    if not os.path.exists(logDir):
+        os.mkdir(logDir)
     timeFormat = "%Y%m%d%H%M%S"
     fileName = time.strftime(timeFormat, time.localtime())
     __fp__ = open(logDir+fileName+'.log','w')

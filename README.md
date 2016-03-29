@@ -30,6 +30,8 @@ The project is based on the framework of tornado, make sure your environment is 
         cd ./iotx
         python server.py
 
+Server started at 127.0.0.1:8888 as default, you can modify it at configure.py
+
 After the service starts, it can be operated through the API interface, the use of API  please refer to our Developer's Guide.
 
 - Documentation

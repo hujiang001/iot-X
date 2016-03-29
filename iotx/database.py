@@ -593,7 +593,7 @@ def db_insert_commandset(deviceId,sensorId,command,value):
              "VALUES (?,?,?,?,?,?)"
     import time
     timeNow = time.strftime("%Y-%m-%d %H:%M:%S ", time.localtime())
-    if type(value) is dict:
+    if isinstance(value,dict):
         value = json.dumps(value)
     try:
         myconn.execute(sqlstr,(deviceId,sensorId,command,value,timeNow,timeNow))

@@ -23,14 +23,14 @@ class TestFrameworkClass(unittest.TestCase):
             TestFrameworkClass._instance = TestFrameworkClass()
         return TestFrameworkClass._instance
     def toString(self,codingStr):
-        if type(codingStr) is not str:
+        if not isinstance(codingStr,basestring):
             return codingStr
         return codingStr.decode('unicode-escape')
 
     def toUnicode(self,codingStr):
-        if type(codingStr) is not str:
+        if not isinstance(codingStr,basestring):
             return codingStr
-        return unicode(codingStr)
+        return codingStr.encode('unicode-escape')
 
     def serverThread(self):
         #close log output
@@ -56,11 +56,6 @@ class TestFrameworkClass(unittest.TestCase):
         privilegeM.priv_add_superuser()
         #初始化权限管理模块
         privilegeM.priv_init()
-
-    def toUnicode(self,codingStr):
-        if type(codingStr) is not str:
-            return codingStr
-        return codingStr.encode('unicode-escape')
 
     def send(self,method,resource,carrier='uri',body=None,userAuth=None,isSuperUser=False,accessKey=None):
         ret = {'status':None, 'retcode':None,'body':None}

@@ -77,12 +77,12 @@ class baseHandle(web.RequestHandler):
         self.write("")
 
     def toString(self,codingStr):
-        if type(codingStr) is not str:
+        if not isinstance(codingStr,basestring):
             return codingStr
         return codingStr.decode('unicode-escape')
 
     def toUnicode(self,codingStr):
-        if type(codingStr) is not str:
+        if not isinstance(codingStr,basestring):
             return codingStr
         return codingStr.encode('unicode-escape')
 
@@ -126,7 +126,7 @@ class baseHandle(web.RequestHandler):
         except Exception,e:
             log.logError("_getArgumentFromBody load body to json fail,exception: "+e.message)
             return default
-        if type(bodyDecode) is not dict:
+        if not isinstance(bodyDecode,dict):
             log.logError("_getArgumentFromBody body is not a dict type ")
             return default
         if not bodyDecode.has_key(key):
@@ -278,10 +278,10 @@ class usersHandle(baseHandle):
                 privilegeM.priv_add(masterRole='administrator',masterId=id,object='user',objectId=id)
         else:
             log.logInfo("name is null")
-            responseApi['id'] = 0
+            responseApi = {}
 
         if id is None:
-            responseApi['id'] = 0
+            responseApi = {}
             self.send_error_msg(self.__ERRCODE__['userexist'],escape.json_encode(responseApi))
             return
 
